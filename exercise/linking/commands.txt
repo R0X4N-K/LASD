@@ -1,0 +1,6 @@
+g++-13 -O3 -o eseguibile file1.cpp file2.cpp
+
+
+Mi permette di compilarli ed effettuare il linking senza produrre i file oggetto, ma restituendo solamente l' eseguibile.
+Con l'opzione -o rinonimo l'eseguibile.
+Con l'opzione -O3 ottimizzo il codice (N=3)
