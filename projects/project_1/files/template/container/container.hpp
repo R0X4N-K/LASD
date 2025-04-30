@@ -4,30 +4,32 @@
 
 /* ************************************************************************** */
 
+
 namespace lasd {
 
 /* ************************************************************************** */
+
 
 class Container {
 
 private:
 
-  // ...
+  unsigned long int size;
 
 protected:
-
-  // ...
 
   /* ************************************************************************ */
 
   // Default constructor
   // Container() specifiers;
-
+  Container(){
+    size = 0;
+   }
 public:
 
   // Destructor
   // ~Container() specifiers
-
+  ~Container() { }
   /* ************************************************************************ */
 
   // Copy assignment
@@ -50,15 +52,23 @@ public:
 
   // type Size() specifiers; // (concrete function should not throw exceptions)
 
+  unsigned long int Size(){ return size; }
+
+  bool Empty(){
+    if(size == 0)
+      return true;
+    return false;
+  }
+ 
 };
 
 /* ************************************************************************** */
 
-class ClearableContainer {
+class ClearableContainer: public Container{
   // Must extend Container
 
 private:
-
+  
   // ...
 
 protected:
@@ -69,6 +79,7 @@ public:
 
   // Destructor
   // ~ClearableContainer() specifiers
+  ~ClearableContainer(){}
 
   /* ************************************************************************ */
 
@@ -89,12 +100,12 @@ public:
   // Specific member functions
 
   // type Clear() specifiers;
-
+  void Clear();
 };
 
 /* ************************************************************************** */
 
-class ResizableContainer {
+class ResizableContainer: public ClearableContainer{
   // Must extend ClearableContainer
 
 private:
@@ -109,7 +120,7 @@ public:
 
   // Destructor
   // ~ResizableContainer() specifiers
-
+  ~ResizableContainer();
   /* ************************************************************************ */
 
   // Copy assignment
@@ -129,7 +140,7 @@ public:
   // Specific member functions
 
   // type Resize(argument) specifiers;
-
+  void Resize(unsigned long int newSize); //implementare
   /* ************************************************************************ */
 
   // Specific member function (inherited from ClearableContainer)
