@@ -1,0 +1,7 @@
+In attachment trovate il testo del primo esercizio, il diagramma
+delle classi richiesto e il template a cui attenersi **scrupolosamente**. 
+Si ricorda che zlasdtest contiene solo
+degli esempi di test, che andranno estesi in zmytest in modo da
+assicurarsi che il codice consegnato non contenga errori. I flag
+inclusi nel makefile non vanno modificati e vi aiutano a
+consegnare un codice il più possibile corretto.
