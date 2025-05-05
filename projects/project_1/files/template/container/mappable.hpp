@@ -51,7 +51,8 @@ public:
 
   // Specific member function
 
-  // using MapFun = std::function<void(Data &)>;
+  using MapFun = std::function<void(Data &)>;
+  virtual void Map(MapFun) = 0;
 
   // type Map(argument) specifiers;
 
@@ -75,7 +76,7 @@ protected:
 public:
 
   // Destructor
-  // ~PreOrderMappableContainer() specifiers
+  virtual ~PreOrderMappableContainer() = default;
 
   /* ************************************************************************ */
 

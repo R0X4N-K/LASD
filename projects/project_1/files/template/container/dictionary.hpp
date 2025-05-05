@@ -6,6 +6,7 @@
 
 #include "testable.hpp"
 #include "mappable.hpp"
+#include "traversable.hpp"
 
 /* ************************************************************************** */
 
@@ -59,6 +60,18 @@ public:
   // type InsertSome(argument) specifiers; // Copy of the value; From TraversableContainer; True if some is inserted
   // type InsertSome(argument) specifiers; // Move of the value; From MappableContainer; True if some is inserted
   // type RemoveSome(argument) specifiers; // From TraversableContainer; True if some is removed
+
+  virtual bool insert(const Data &) = 0;
+  virtual bool insert(Data &&) = 0;
+  virtual bool remove(const Data &) = 0;
+
+  inline virtual bool InsertAll(const TraversableContainer<Data> &);
+  inline virtual bool InsertAll(MappableContainer<Data> &&);
+  inline virtual bool RemoveAll(const TraversableContainer<Data> &);
+  
+  inline virtual bool InsertSome(const TraversableContainer<Data> &);
+  inline virtual bool InsertSome(MappableContainer<Data> &&);
+  inline virtual bool RemoveSome(const TraversableContainer<Data> &);
 
 };
 

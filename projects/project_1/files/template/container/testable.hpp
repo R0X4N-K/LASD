@@ -27,7 +27,7 @@ protected:
 public:
 
   // Destructor
-  // ~TestableContainer() specifiers
+  virtual ~TestableContainer();
 
   /* ************************************************************************ */
 
@@ -49,6 +49,7 @@ public:
 
   // type Exists(argument) specifiers; // (concrete function should not throw exceptions)
 
+  virtual bool Exists(const Data &) const noexcept = 0;
 };
 
 /* ************************************************************************** */

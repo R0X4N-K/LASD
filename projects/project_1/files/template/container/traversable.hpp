@@ -51,22 +51,23 @@ public:
 
   // Specific member function
 
-  // using TraverseFun = std::function<void(const Data &)>;
+  using TraverseFun = std::function<void(const Data &)>;
 
+  virtual void Traverse(TraverseFun) const = 0;
   // type Traverse(arguments) specifiers;
 
-  // template <typename Accumulator>
-  // using FoldFun = std::function<Accumulator(const Data &, const Accumulator &)>;
+  template <typename Accumulator>
+  using FoldFun = std::function<Accumulator(const Data &, const Accumulator &)>;
 
-  // template <typename Accumulator>
+  template <typename Accumulator>
+  Accumulator Fold(FoldFun<Accumulator>, Accumulator) const;
   // type Fold(arguments) specifiers;
 
   /* ************************************************************************ */
 
   // Specific member function (inherited from TestableContainer)
 
-  // type Exists(argument) specifiers; // Override TestableContainer member
-
+  inline bool Exists(const Data &) const noexcept override;
 };
 
 /* ************************************************************************** */
