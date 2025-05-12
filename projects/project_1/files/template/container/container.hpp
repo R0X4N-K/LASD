@@ -2,8 +2,7 @@
 #ifndef CONTAINER_HPP
 #define CONTAINER_HPP
 
-
-typedef unsigned long int ulong;
+#include "sys/types.h"
 
 namespace lasd {
 
@@ -25,19 +24,19 @@ public:
   // Copy assignment
   // type operator=(argument); // Copy assignment of abstract types is not possible.
 
-  Container & operator =(const Container &) = delete;
+  Container& operator = (const Container&) = delete;
 
   // Move assignment
   // type operator=(argument); // Move assignment of abstract types is not possible.
 
-  Container & operator = (Container &&) noexcept = delete;
+  Container& operator = (Container&&) noexcept = delete;
 
   // Comparison operators
   // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
   // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
 
-  bool operator==(const Container &) const noexcept = delete;
-  bool operator !=(const Container &) const noexcept = delete;
+  bool operator == (const Container&) const noexcept = delete;
+  bool operator !=(const Container&) const noexcept = delete;
 
   // Specific member functions
 
@@ -76,19 +75,19 @@ public:
   // Copy assignment
   // type operator=(argument); // Copy assignment of abstract types is not possible.
 
-  ClearableContainer & operator=(const ClearableContainer &) = delete;
+  ClearableContainer& operator=(const ClearableContainer&) = delete;
 
   // Move assignment
   // type operator=(argument); // Move assignment of abstract types is not possible.
 
-  ClearableContainer & operator=(ClearableContainer &&) noexcept = delete;
+  ClearableContainer& operator=(ClearableContainer&&) noexcept = delete;
 
   // Comparison operators
   // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
   // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
 
-  bool operator==(const ClearableContainer &) const noexcept = delete;
-  bool operator!=(const ClearableContainer &) const noexcept = delete;
+  bool operator==(const ClearableContainer&) const noexcept = delete;
+  bool operator!=(const ClearableContainer&) const noexcept = delete;
   // Specific member functions
 
   // type Clear() specifiers;
@@ -115,17 +114,17 @@ public:
 
   // Copy assignment
   // type operator=(argument); // Copy assignment of abstract types is not possible.
-  ResizableContainer & operator=(const ResizableContainer &) = delete;
+  ResizableContainer& operator=(const ResizableContainer&) = delete;
   
   // Move assignment
   // type operator=(argument); // Move assignment of abstract types is not possible.
 
-  ResizableContainer & operator=(ResizableContainer &&) noexcept = delete;
+  ResizableContainer& operator=(ResizableContainer&&) noexcept = delete;
   // Comparison operators
   // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
   // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
 
-  bool operator ==(const ResizableContainer &) const noexcept= delete;
+  bool operator ==(const ResizableContainer&) const noexcept= delete;
   bool operator !=(const ResizableContainer &) const noexcept = delete;
   // Specific member functions
 
