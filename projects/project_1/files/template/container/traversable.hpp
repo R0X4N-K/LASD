@@ -1,4 +1,3 @@
-
 #ifndef TRAVERSABLE_HPP
 #define TRAVERSABLE_HPP
 
@@ -17,7 +16,7 @@ namespace lasd {
 /* ************************************************************************** */
 
 template <typename Data>
-class TraversableContainer {
+class TraversableContainer : public TestableContainer<Data>{
   // Must extend TestableContainer<Data>
 
 private:
@@ -31,23 +30,24 @@ protected:
 public:
 
   // Destructor
-  // ~TraversableContainer() specifiers
-
-  /* ************************************************************************ */
+  ~TraversableContainer();
 
   // Copy assignment
   // type operator=(argument); // Copy assignment of abstract types is not possible.
 
+  TraversableContainer<Data>& operator = (const TestableContainer<Data>&) = delete;
+
   // Move assignment
   // type operator=(argument); // Move assignment of abstract types is not possible.
 
-  /* ************************************************************************ */
+  TraversableContainer<Data>& operator = (TestableContainer<Data>&&) noexcept = delete;
 
   // Comparison operators
   // type operator==(argument) specifiers; // Comparison of abstract types might be possible.
   // type operator!=(argument) specifiers; // Comparison of abstract types might be possible.
 
-  /* ************************************************************************ */
+  bool operator == (TraversableContainer<Data>&) const noexcept = delete;
+  bool operator != (TraversableContainer<Data>&) const noexcept = delete;
 
   // Specific member function
 
@@ -63,7 +63,6 @@ public:
   Accumulator Fold(FoldFun<Accumulator>, Accumulator) const;
   // type Fold(arguments) specifiers;
 
-  /* ************************************************************************ */
 
   // Specific member function (inherited from TestableContainer)
 

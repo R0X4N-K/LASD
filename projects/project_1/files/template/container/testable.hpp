@@ -36,7 +36,7 @@ public:
   // Move assignment
   // type operator=(argument); // Move assignment of abstract types is not possible.
 
-  TestableContainer<Data>& operator = (const TestableContainer<Data>&&) noexcept = delete;
+  TestableContainer<Data>& operator = (TestableContainer<Data>&&) noexcept = delete;
 
 
   // Comparison operators
