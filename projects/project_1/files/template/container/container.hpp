@@ -124,8 +124,8 @@ public:
   // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
   // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
 
-  bool operator ==(const ResizableContainer&) const noexcept= delete;
-  bool operator !=(const ResizableContainer &) const noexcept = delete;
+  bool operator == (const ResizableContainer&) const noexcept= delete;
+  bool operator != (const ResizableContainer&) const noexcept = delete;
   // Specific member functions
 
   // type Resize(argument) specifiers;

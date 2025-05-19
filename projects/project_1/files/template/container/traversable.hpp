@@ -1,19 +1,10 @@
 #ifndef TRAVERSABLE_HPP
 #define TRAVERSABLE_HPP
 
-/* ************************************************************************** */
-
 #include <functional>
-
-/* ************************************************************************** */
-
 #include "testable.hpp"
 
-/* ************************************************************************** */
-
 namespace lasd {
-
-/* ************************************************************************** */
 
 template <typename Data>
 class TraversableContainer : public TestableContainer<Data>{
@@ -72,7 +63,7 @@ public:
 /* ************************************************************************** */
 
 template <typename Data>
-class PreOrderTraversableContainer {
+class PreOrderTraversableContainer : public TraversableContainer<Data> {
   // Must extend TraversableContainer<Data>
 
 private:
@@ -86,29 +77,32 @@ protected:
 public:
 
   // Destructor
-  // ~PreOrderTraversableContainer() specifiers
+  ~PreOrderTraversableContainer();
 
-  /* ************************************************************************ */
 
   // Copy assignment
   // type operator=(argument); // Copy assignment of abstract types is not possible.
 
+  PreOrderTraversableContainer<Data>& operator = (const TraversableContainer<Data>&) = delete;
   // Move assignment
   // type operator=(argument); // Move assignment of abstract types is not possible.
 
-  /* ************************************************************************ */
-
+  PreOrderTraversableContainer<Data>& operator = (TraversableContainer<Data>&&) noexcept = delete;
   // Comparison operators
   // type operator==(argument) specifiers; // Comparison of abstract types might be possible.
   // type operator!=(argument) specifiers; // Comparison of abstract types might be possible.
 
-  /* ************************************************************************ */
+  bool operator == (const PreOrderTraversableContainer<Data>&) const noexcept = delete;
+  bool operator != (const PreOrderTraversableContainer<Data>&) const noexcept = delete;
 
   // Specific member function
 
   // using typename TraversableContainer<Data>::TraverseFun;
-
+  using TraverseFun = std::function<void(const Data &)>;
+  
   // type PreOrderTraverse(arguments) specifiers;
+
+  virtual void PreTraverse(TraverseFun) const = 0;
 
   // template <typename Accumulator>
   // using FoldFun = typename TraversableContainer<Data>::FoldFun<Accumulator>;
@@ -116,9 +110,9 @@ public:
   // template <typename Accumulator>
   // type PreOrderFold(arguments) specifiers;
 
-  /* ************************************************************************ */
 
   // Specific member function (inherited from TraversableContainer)
+  
 
   // type Traverse(arguments) specifiers; // Override TraversableContainer member
 
