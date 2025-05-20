@@ -1,4 +1,3 @@
-
 #ifndef SETVEC_HPP
 #define SETVEC_HPP
 
@@ -14,7 +13,8 @@ namespace lasd {
   /* ************************************************************************** */
 
   template <typename Data>
-  class SetVec {
+  class SetVec : virtual public Set<Data>,
+    virtual protected Vector<Data> {
     // Must extend Set<Data>,
     //             ResizableContainer
 
@@ -24,97 +24,118 @@ namespace lasd {
 
   protected:
 
-    // using Container::???;
+    using Vector<Data>::elements;
+    using Container::size;
 
     // ...
 
   public:
 
     // Default constructor
-    // SetVec() specifiers;
+    SetVec() = default;
 
     /* ************************************************************************ */
 
     // Specific constructors
-    // SetVec(argument) specifiers; // A set obtained from a TraversableContainer
-    // SetVec(argument) specifiers; // A set obtained from a MappableContainer
+    SetVec(const TraversableContainer<Data>&); // A set obtained from a TraversableContainer
+    SetVec(MappableContainer<Data>&&) noexcept; // A set obtained from a MappableContainer
 
     /* ************************************************************************ */
 
     // Copy constructor
-    // SetVec(argument) specifiers;
+    SetVec(const SetVec&);
 
     // Move constructor
-    // SetVec(argument) specifiers;
+    SetVec(SetVec&&) noexcept;
 
     /* ************************************************************************ */
 
     // Destructor
-    // ~SetVec() specifiers;
+    virtual ~SetVec() = default;
 
     /* ************************************************************************ */
 
     // Copy assignment
-    // type operator=(argument) specifiers;
+    SetVec& operator=(const SetVec&);
 
     // Move assignment
-    // type operator=(argument) specifiers;
+    SetVec& operator=(SetVec&&) noexcept;
 
     /* ************************************************************************ */
 
     // Comparison operators
-    // type operator==(argument) specifiers;
-    // type operator!=(argument) specifiers;
+    bool operator==(const SetVec&) const noexcept;
+    bool operator!=(const SetVec&) const noexcept;
 
     /* ************************************************************************ */
 
     // Specific member functions (inherited from OrderedDictionaryContainer)
 
-    // type Min(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
-    // type MinNRemove(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
-    // type RemoveMin(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
+    const Data& Min() const override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
+    Data MinNRemove() override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
+    void RemoveMin() override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
 
-    // type Max(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
-    // type MaxNRemove(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
-    // type RemoveMax(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
+    const Data& Max() const override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
+    Data MaxNRemove() override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
+    void RemoveMax() override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
 
-    // type Predecessor(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
-    // type PredecessorNRemove(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
-    // type RemovePredecessor(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
+    const Data& Predecessor(const Data&) const override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
+    Data PredecessorNRemove(const Data&) override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
+    void RemovePredecessor(const Data&) override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
 
-    // type Successor(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
-    // type SuccessorNRemove(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
-    // type RemoveSuccessor(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
+    const Data& Successor(const Data&) const override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
+    Data SuccessorNRemove(const Data&) override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
+    void RemoveSuccessor(const Data&) override; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
 
     /* ************************************************************************ */
 
     // Specific member functions (inherited from DictionaryContainer)
 
-    // type Insert(argument) specifiers; // Override DictionaryContainer member (copy of the value)
-    // type Insert(argument) specifiers; // Override DictionaryContainer member (move of the value)
-    // type Remove(argument) specifiers; // Override DictionaryContainer member
+    bool Insert(const Data&) override; // Override DictionaryContainer member (copy of the value)
+    bool Insert(Data&&) override; // Override DictionaryContainer member (move of the value)
+    bool Remove(const Data&) override; // Override DictionaryContainer member
 
     /* ************************************************************************ */
 
     // Specific member functions (inherited from LinearContainer)
 
-    // type operator[](argument) specifiers; // Override LinearContainer member (must throw std::out_of_range when out of range)
+    using Vector<Data>::operator[];
+    using Vector<Data>::Front;
+    using Vector<Data>::Back;
 
     /* ************************************************************************** */
 
     // Specific member function (inherited from TestableContainer)
 
-    // type Exists(argument) specifiers; // Override TestableContainer member
+    bool Exists(const Data&) const noexcept override; // Override TestableContainer member
 
     /* ************************************************************************ */
 
     // Specific member function (inherited from ClearableContainer)
 
-    // type Clear() specifiers; // Override ClearableContainer member
+    using Vector<Data>::Clear;
 
   protected:
 
-    // Auxiliary functions, if necessary!
+    // Auxiliary functions
+
+    // Binary search function for finding an element or its insertion point
+    ulong BinarySearch(const Data&) const;
+
+    // Find the position of the predecessor to a given data value
+    long FindPredecessorPos(const Data&) const;
+
+    // Find the position of the successor to a given data value
+    long FindSuccessorPos(const Data&) const;
+
+    // Shifts elements right from a given position
+    void ShiftRight(ulong);
+
+    // Shifts elements left from a given position
+    void ShiftLeft(ulong);
+
+    // Sorts the vector to maintain order when needed
+    void Sort();
 
   };
 
