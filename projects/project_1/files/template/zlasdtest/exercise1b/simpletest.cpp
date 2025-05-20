@@ -22,7 +22,7 @@ using namespace std;
 
 /* ************************************************************************** */
 
-void stestSetInt(lasd::Set<int> & set, uint & testnum, uint & testerr) {
+void stestSetInt(lasd::Set<int>& set, uint& testnum, uint& testerr) {
   uint loctestnum = 0, loctesterr = 0;
   try {
 
@@ -117,7 +117,7 @@ void stestSetInt(lasd::Set<int> & set, uint & testnum, uint & testerr) {
   testerr += loctesterr;
 }
 
-void stestSetInt(uint & testnum, uint & testerr) {
+void stestSetInt(uint& testnum, uint& testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of Set<int> Test" << endl;
   try {
@@ -251,7 +251,7 @@ void stestSetInt(uint & testnum, uint & testerr) {
   testerr += loctesterr;
 }
 
-void stestSetFloat(uint & testnum, uint & testerr) {
+void stestSetFloat(uint& testnum, uint& testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of Set<double> Test" << endl;
   try {
@@ -353,7 +353,7 @@ void stestSetFloat(uint & testnum, uint & testerr) {
   testerr += loctesterr;
 }
 
-void stestSetString(lasd::Set<string> & set, uint & testnum, uint & testerr) {
+void stestSetString(lasd::Set<string>& set, uint& testnum, uint& testerr) {
   uint loctestnum = 0, loctesterr = 0;
   try {
     TraversePreOrder(loctestnum, loctesterr, set, true, &TraversePrint<string>);
@@ -369,7 +369,7 @@ void stestSetString(lasd::Set<string> & set, uint & testnum, uint & testerr) {
   testerr += loctesterr;
 }
 
-void stestSetString(uint & testnum, uint & testerr) {
+void stestSetString(uint& testnum, uint& testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of Set<string> Test" << endl;
   try {
@@ -406,7 +406,7 @@ void stestSetString(uint & testnum, uint & testerr) {
 
 /* ************************************************************************** */
 
-void testSimpleExercise1B(uint & testnum, uint & testerr) {
+void testSimpleExercise1B(uint& testnum, uint& testerr) {
   stestSetInt(testnum, testerr);
   stestSetFloat(testnum, testerr);
   stestSetString(testnum, testerr);

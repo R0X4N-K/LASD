@@ -1,23 +1,23 @@
 namespace lasd {
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-// PreOrderMappableContainer implementation
+  // PreOrderMappableContainer implementation
 
-template <typename Data>
-void PreOrderMappableContainer<Data>::Map(MapFun fun) {
-  PreOrderMap(fun);
-}
+  template <typename Data>
+  void PreOrderMappableContainer<Data>::Map(MapFun fun) {
+    PreOrderMap(fun);
+  }
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-// PostOrderMappableContainer implementation
+  // PostOrderMappableContainer implementation
 
-template <typename Data>
-void PostOrderMappableContainer<Data>::Map(MapFun fun) {
-  PostOrderMap(fun);
-}
+  template <typename Data>
+  void PostOrderMappableContainer<Data>::Map(MapFun fun) {
+    PostOrderMap(fun);
+  }
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
 }
