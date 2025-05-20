@@ -164,8 +164,7 @@ public:
 protected:
 
   // Auxiliary functions for Sort
-  void QuickSort(Data*, ulong, ulong);
-  ulong Partition(Data*, ulong, ulong);
+  void InsertionSort(Data*, ulong);
 
 };
 

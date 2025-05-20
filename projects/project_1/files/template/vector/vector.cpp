@@ -218,39 +218,23 @@ SortableVector<Data>& SortableVector<Data>::operator=(SortableVector<Data>&& vec
 template <typename Data>
 void SortableVector<Data>::Sort() {
     if (size > 1) {
-        QuickSort(this->elements, 0, size - 1);
-    }
-}
-
-//TODO: cambiare in insertion sort
-template <typename Data>
-void SortableVector<Data>::QuickSort(Data* array, ulong low, ulong high) {
-    if (low < high) {
-        ulong pivotIndex = Partition(array, low, high);
-        
-        // Avoid underflow for pivotIndex == 0
-        if (pivotIndex > 0) {
-            QuickSort(array, low, pivotIndex - 1);
-        }
-        
-        QuickSort(array, pivotIndex + 1, high);
+        InsertionSort(this->elements, size);
     }
 }
 
 template <typename Data>
-ulong SortableVector<Data>::Partition(Data* array, ulong low, ulong high) {
-    Data pivot = array[high];
-    ulong i = low;
-    
-    for (ulong j = low; j < high; j++) {
-        if (array[j] <= pivot) {
-            std::swap(array[i], array[j]);
-            i++;
+void SortableVector<Data>::InsertionSort(Data* array, ulong length) {
+    for (ulong i = 1; i < length; i++) {
+        Data key = array[i];
+        ulong j = i;
+        
+        while (j > 0 && array[j - 1] > key) {
+            array[j] = array[j - 1];
+            j--;
         }
+        
+        array[j] = key;
     }
-    
-    std::swap(array[i], array[high]);
-    return i;
 }
 
 /* ************************************************************************** */
