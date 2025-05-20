@@ -222,6 +222,7 @@ void SortableVector<Data>::Sort() {
     }
 }
 
+//TODO: cambiare in insertion sort
 template <typename Data>
 void SortableVector<Data>::QuickSort(Data* array, ulong low, ulong high) {
     if (low < high) {
