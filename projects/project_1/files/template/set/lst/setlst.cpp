@@ -362,15 +362,25 @@ namespace lasd
       return true;
     }
 
-    Node* node = FindNodeWithBinarySearch(data);
+    Node* predNode = FindNodeWithBinarySearch(data);
 
-    // If the element already exists
-    if (node != nullptr && node->element == data)
+    if (predNode != nullptr && predNode->next != nullptr && predNode->next->element == data)
     {
       return false;
     }
 
-    return InsertInOrder(node, data);
+    if (predNode == nullptr)
+    {
+      if (head->element == data)
+      {
+        return false;
+      }
+
+      List<Data>::InsertAtFront(data);
+      return true;
+    }
+
+    return InsertInOrder(predNode, data);
   }
 
   template <typename Data>
@@ -382,15 +392,25 @@ namespace lasd
       return true;
     }
 
-    Node* node = FindNodeWithBinarySearch(data);
+    Node* predNode = FindNodeWithBinarySearch(data);
 
-    // If the element already exists
-    if (node != nullptr && node->element == data)
+    if (predNode != nullptr && predNode->next != nullptr && predNode->next->element == data)
     {
       return false;
     }
 
-    return InsertInOrder(node, std::move(data));
+    if (predNode == nullptr)
+    {
+      if (head->element == data)
+      {
+        return false;
+      }
+
+      List<Data>::InsertAtFront(std::move(data));
+      return true;
+    }
+
+    return InsertInOrder(predNode, std::move(data));
   }
 
   template <typename Data>
@@ -415,18 +435,12 @@ namespace lasd
       return true;
     }
 
-    // Find the node
-    Node* current = head;
-    while (current->next != nullptr && current->next->element != data)
-    {
-      current = current->next;
-    }
+    Node* predNode = FindNodeWithBinarySearch(data);
 
-    // If the element was found
-    if (current->next != nullptr)
+    if (predNode != nullptr && predNode->next != nullptr && predNode->next->element == data)
     {
-      Node* toDelete = current->next;
-      current->next = toDelete->next;
+      Node* toDelete = predNode->next;
+      predNode->next = toDelete->next;
       delete toDelete;
       size--;
       return true;
@@ -445,8 +459,13 @@ namespace lasd
       return false;
     }
 
-    Node* node = FindNodeWithBinarySearch(data);
-    return (node != nullptr && node->element == data);
+    if (head->element == data)
+    {
+      return true;
+    }
+
+    Node* predNode = FindNodeWithBinarySearch(data);
+    return (predNode != nullptr && predNode->next != nullptr && predNode->next->element == data);
   }
 
   // Auxiliary functions
@@ -459,10 +478,14 @@ namespace lasd
       return nullptr;
     }
 
-    // Casi speciali per efficienza
-    if (data <= head->element)
+    if (data < head->element)
     {
-      return (data == head->element) ? head : nullptr;
+      return nullptr;
+    }
+
+    if (data == head->element)
+    {
+      return nullptr;
     }
 
     if (data > tail->element)
@@ -470,35 +493,42 @@ namespace lasd
       return tail;
     }
 
-    // Ricerca binaria usando la dimensione nota
     ulong left = 0;
     ulong right = size - 1;
+
+    Node* result = nullptr;
 
     while (left <= right)
     {
       ulong mid = left + (right - left) / 2;
 
-      // Ottieni il nodo alla posizione mid
       Node* midNode = GetNodeAt(mid);
 
       if (midNode->element == data)
       {
-        return midNode; // Trovato l'elemento
+        if (mid == 0)
+        {
+          return nullptr;
+        }
+        else
+        {
+          return GetNodeAt(mid - 1);
+        }
       }
       else if (midNode->element < data)
       {
-        left = mid + 1; // Cerca nella metà destra
+        result = midNode;
+        left = mid + 1;
       }
       else
       {
         if (mid == 0)
-          break;         // Evita underflow
-        right = mid - 1; // Cerca nella metà sinistra
+          break;  // Evita underflow
+        right = mid - 1;
       }
     }
 
-    // Trova il nodo immediatamente prima del punto di inserimento
-    return GetNodeAt(left > 0 ? left - 1 : 0);
+    return result;
   }
 
   template <typename Data>
@@ -509,27 +539,34 @@ namespace lasd
       return nullptr;
     }
 
-    // If data is less than the minimum, the successor is the minimum
-    if (data < head->element)
-    {
-      return head;
-    }
-
     // If data is greater than or equal to the maximum, there is no successor
     if (data >= tail->element)
     {
       return nullptr;
     }
 
-    // Find the first element greater than data\
-  //TODO: da fare con la ricerca binaria
-    Node* current = head;
-    while (current != nullptr && current->element <= data)
+    if (data < head->element)
     {
-      current = current->next;
+      return head;
     }
 
-    return current;
+    Node* predNode = FindNodeWithBinarySearch(data);
+
+    if (predNode == nullptr)
+    {
+      if (data == head->element && head->next != nullptr)
+      {
+        return head->next;
+      }
+      return head;
+    }
+
+    if (predNode->next != nullptr && predNode->next->element == data)
+    {
+      return predNode->next->next;
+    }
+
+    return predNode->next;
   }
 
   template <typename Data>
@@ -552,73 +589,57 @@ namespace lasd
       return tail;
     }
 
-    // Find the last element less than data
-    Node* current = head;
-    Node* predecessor = nullptr;
+    Node* predNode = FindNodeWithBinarySearch(data);
 
-    // TODO: da fare con la ricerca binaria
-    while (current != nullptr && current->element < data)
+    if (predNode != nullptr && predNode->next != nullptr && predNode->next->element == data)
     {
-      predecessor = current;
-      current = current->next;
+      return predNode;
     }
 
-    return predecessor;
+    return predNode;
   }
 
   template <typename Data>
-  bool SetLst<Data>::InsertInOrder(Node* node, const Data& data)
+  bool SetLst<Data>::InsertInOrder(Node* predNode, const Data& data)
   {
-    if (node == nullptr)
+    if (predNode == nullptr)
     {
-      // Insert at the beginning
       List<Data>::InsertAtFront(data);
       return true;
     }
 
-    if (node == tail && node->element < data)
+    if (predNode == tail && predNode->element < data)
     {
-      // Insert at the end
       List<Data>::InsertAtBack(data);
       return true;
     }
 
-    // Insert in the middle
     Node* newNode = new Node(data);
-    if (node->next != nullptr)
-    {
-      newNode->next = node->next;
-    }
-    node->next = newNode;
+    newNode->next = predNode->next;
+    predNode->next = newNode;
 
     size++;
     return true;
   }
 
   template <typename Data>
-  bool SetLst<Data>::InsertInOrder(Node* node, Data&& data)
+  bool SetLst<Data>::InsertInOrder(Node* predNode, Data&& data)
   {
-    if (node == nullptr)
+    if (predNode == nullptr)
     {
-      // Insert at the beginning
       List<Data>::InsertAtFront(std::move(data));
       return true;
     }
 
-    if (node == tail && node->element < data)
+    if (predNode == tail && predNode->element < data)
     {
-      // Insert at the end
       List<Data>::InsertAtBack(std::move(data));
       return true;
     }
 
-    // Insert in the middle
     Node* newNode = new Node(std::move(data));
-    if (node->next != nullptr)
-    {
-      newNode->next = node->next;
-    }
-    node->next = newNode;
+    newNode->next = predNode->next;
+    predNode->next = newNode;
 
     size++;
     return true;
