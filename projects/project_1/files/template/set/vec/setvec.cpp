@@ -68,7 +68,7 @@ namespace lasd {
 
     template <typename Data>
     const Data& SetVec<Data>::Min() const {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
         return Front();
@@ -76,7 +76,7 @@ namespace lasd {
 
     template <typename Data>
     Data SetVec<Data>::MinNRemove() {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
         Data min = Front();
@@ -86,7 +86,7 @@ namespace lasd {
 
     template <typename Data>
     void SetVec<Data>::RemoveMin() {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
         ShiftLeft(0);
@@ -94,7 +94,7 @@ namespace lasd {
 
     template <typename Data>
     const Data& SetVec<Data>::Max() const {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
         return Back();
@@ -102,7 +102,7 @@ namespace lasd {
 
     template <typename Data>
     Data SetVec<Data>::MaxNRemove() {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
         Data max = Back();
@@ -112,7 +112,7 @@ namespace lasd {
 
     template <typename Data>
     void SetVec<Data>::RemoveMax() {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
         Vector<Data>::Resize(size - 1);
@@ -120,7 +120,7 @@ namespace lasd {
 
     template <typename Data>
     const Data& SetVec<Data>::Predecessor(const Data& data) const {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
 
@@ -134,7 +134,7 @@ namespace lasd {
 
     template <typename Data>
     Data SetVec<Data>::PredecessorNRemove(const Data& data) {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
 
@@ -150,7 +150,7 @@ namespace lasd {
 
     template <typename Data>
     void SetVec<Data>::RemovePredecessor(const Data& data) {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
 
@@ -164,7 +164,7 @@ namespace lasd {
 
     template <typename Data>
     const Data& SetVec<Data>::Successor(const Data& data) const {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
 
@@ -178,7 +178,7 @@ namespace lasd {
 
     template <typename Data>
     Data SetVec<Data>::SuccessorNRemove(const Data& data) {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
 
@@ -194,7 +194,7 @@ namespace lasd {
 
     template <typename Data>
     void SetVec<Data>::RemoveSuccessor(const Data& data) {
-        if (Empty()) {
+        if (this->Empty()) {
             throw std::length_error("SetVec: Empty container");
         }
 
@@ -219,7 +219,7 @@ namespace lasd {
         }
 
         // Insert the element at the correct position
-        if (Empty()) {
+        if (this->Empty()) {
             Vector<Data>::Resize(1);
             elements[0] = data;
         }
@@ -243,7 +243,7 @@ namespace lasd {
         }
 
         // Insert the element at the correct position
-        if (Empty()) {
+        if (this->Empty()) {
             Vector<Data>::Resize(1);
             elements[0] = std::move(data);
         }
@@ -275,7 +275,7 @@ namespace lasd {
 
     template <typename Data>
     bool SetVec<Data>::Exists(const Data& data) const noexcept {
-        if (Empty()) {
+        if (this->Empty()) {
             return false;
         }
 
@@ -284,11 +284,16 @@ namespace lasd {
         return (pos < size && elements[pos] == data);
     }
 
+    template <typename Data>
+    void SetVec<Data>::Clear() {
+        Vector<Data>::Clear();
+    }
+
     // Protected auxiliary functions
 
     template <typename Data>
     ulong SetVec<Data>::BinarySearch(const Data& data) const {
-        if (Empty()) {
+        if (this->Empty()) {
             return 0;
         }
 
@@ -314,7 +319,7 @@ namespace lasd {
 
     template <typename Data>
     long SetVec<Data>::FindPredecessorPos(const Data& data) const {
-        if (Empty() || data <= Min()) {
+        if (this->Empty() || data <= Min()) {
             return -1; // No predecessor if empty or if data is the minimum
         }
 
@@ -340,7 +345,7 @@ namespace lasd {
 
     template <typename Data>
     long SetVec<Data>::FindSuccessorPos(const Data& data) const {
-        if (Empty() || data >= Max()) {
+        if (this->Empty() || data >= Max()) {
             return -1; // No successor if empty or if data is the maximum
         }
 

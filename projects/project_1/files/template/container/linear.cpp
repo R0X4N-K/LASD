@@ -24,6 +24,27 @@ namespace lasd {
     }
   }
 
+  // Comparison operators implementation
+  template <typename Data>
+  bool LinearContainer<Data>::operator==(const LinearContainer& other) const noexcept {
+    if (this->Size() != other.Size()) {
+      return false;
+    }
+
+    for (ulong i = 0; i < this->Size(); i++) {
+      if (operator[](i) != other[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  template <typename Data>
+  bool LinearContainer<Data>::operator!=(const LinearContainer& other) const noexcept {
+    return !(*this == other);
+  }
+
   // MutableLinearContainer
 
   template <typename Data>

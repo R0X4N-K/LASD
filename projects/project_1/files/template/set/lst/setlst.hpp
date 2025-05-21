@@ -97,7 +97,7 @@ namespace lasd
 
     // Specific member functions (inherited from TestableContainer)
 
-    bool Exists(const Data&) const noexcept override; // Override TestableContainer member
+    virtual bool Exists(const Data&) const noexcept override; // Override TestableContainer member
 
     /* ************************************************************************ */
 

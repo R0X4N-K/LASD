@@ -7,7 +7,7 @@
 namespace lasd {
 
   template <typename Data>
-  class TraversableContainer : public TestableContainer<Data> {
+  class TraversableContainer : virtual public TestableContainer<Data> {
     // Must extend TestableContainer<Data>
 
   private:
@@ -45,7 +45,7 @@ namespace lasd {
     using FoldFun = std::function<Accumulator(const Data&, const Accumulator&)>;
 
     template <typename Accumulator>
-    Accumulator Fold(FoldFun<Accumulator>, Accumulator) const = 0;
+    Accumulator Fold(FoldFun<Accumulator>, Accumulator) const;
 
     // Specific member function (inherited from TestableContainer)
     inline bool Exists(const Data&) const noexcept override;
@@ -92,7 +92,7 @@ namespace lasd {
     using FoldFun = typename TraversableContainer<Data>::template FoldFun<Accumulator>;
 
     template <typename Accumulator>
-    virtual Accumulator PreOrderFold(FoldFun<Accumulator>, Accumulator) const = 0;
+    Accumulator PreOrderFold(FoldFun<Accumulator>, Accumulator) const;
 
     // Specific member function (inherited from TraversableContainer)
     virtual void Traverse(TraverseFun) const override;
@@ -145,7 +145,7 @@ namespace lasd {
     using FoldFun = typename TraversableContainer<Data>::template FoldFun<Accumulator>;
 
     template <typename Accumulator>
-    virtual Accumulator PostOrderFold(FoldFun<Accumulator>, Accumulator) const = 0;
+    Accumulator PostOrderFold(FoldFun<Accumulator>, Accumulator) const;
 
     /* ************************************************************************ */
 

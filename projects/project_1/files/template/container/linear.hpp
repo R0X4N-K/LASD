@@ -44,10 +44,10 @@ namespace lasd {
 
     // Comparison operators
     // type operator==(argument) specifiers; // Comparison of abstract types is possible.
-    bool operator==(const LinearContainer&) const noexcept = delete;
+    bool operator==(const LinearContainer&) const noexcept;
 
     // type operator!=(argument) specifiers; // Comparison of abstract types is possible.
-    bool operator!=(const LinearContainer&) const noexcept = delete;
+    bool operator!=(const LinearContainer&) const noexcept;
 
     /* ************************************************************************ */
 

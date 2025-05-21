@@ -44,6 +44,8 @@ namespace lasd {
     // type operator=(argument); // Move assignment of abstract types is not possible.
     Set& operator=(Set&&) noexcept = delete;
 
+
+    using DictionaryContainer<Data>::Exists;
   };
 
   /* ************************************************************************** */

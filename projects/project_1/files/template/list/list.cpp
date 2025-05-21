@@ -112,7 +112,7 @@ namespace lasd {
   template <typename Data>
   List<Data>& List<Data>::operator=(List<Data>&& other) noexcept {
     if (this != &other) {
-      Clear();
+      // Non chiamare Clear()! Fai solo lo swap
       std::swap(head, other.head);
       std::swap(tail, other.tail);
       std::swap(size, other.size);
@@ -342,28 +342,22 @@ namespace lasd {
 
   template <typename Data>
   void List<Data>::PreOrderMap(MapFun fun) {
-    std::function<void(Node*, MapFun)> preOrderMapRecursive =
-      [&preOrderMapRecursive](Node* node, MapFun mapFun) {
-      if (node != nullptr) {
-        mapFun(node->element);
-        preOrderMapRecursive(node->next, mapFun);
-      }
-      };
-
-    preOrderMapRecursive(head, fun);
+    Node* current = head;
+    while (current != nullptr) {
+      fun(current->element);
+      current = current->next;
+    }
   }
 
   template <typename Data>
   void List<Data>::PostOrderMap(MapFun fun) {
-    std::function<void(Node*, MapFun)> postOrderMapRecursive =
-      [&postOrderMapRecursive](Node* node, MapFun mapFun) {
-      if (node != nullptr) {
-        postOrderMapRecursive(node->next, mapFun);
-        mapFun(node->element);
+    std::function<void(Node*)> recursiveMap = [&recursiveMap, &fun](Node* currentNode) {
+      if (currentNode != nullptr) {
+        recursiveMap(currentNode->next);
+        fun(currentNode->element);
       }
       };
-
-    postOrderMapRecursive(head, fun);
+    recursiveMap(head);
   }
 
   // Specific member function (inherited from TraversableContainer, PreOrderTraversableContainer, PostOrderTraversableContainer)
@@ -375,28 +369,22 @@ namespace lasd {
 
   template <typename Data>
   void List<Data>::PreOrderTraverse(TraverseFun fun) const {
-    std::function<void(Node*, TraverseFun)> preOrderTraverseRecursive =
-      [&preOrderTraverseRecursive](Node* node, TraverseFun traverseFun) {
-      if (node != nullptr) {
-        traverseFun(node->element);
-        preOrderTraverseRecursive(node->next, traverseFun);
-      }
-      };
-
-    preOrderTraverseRecursive(head, fun);
+    Node* current = head;
+    while (current != nullptr) {
+      fun(current->element);
+      current = current->next;
+    }
   }
 
   template <typename Data>
   void List<Data>::PostOrderTraverse(TraverseFun fun) const {
-    std::function<void(Node*, TraverseFun)> postOrderTraverseRecursive =
-      [&postOrderTraverseRecursive](Node* node, TraverseFun traverseFun) {
-      if (node != nullptr) {
-        postOrderTraverseRecursive(node->next, traverseFun);
-        traverseFun(node->element);
+    std::function<void(Node*)> recursiveTraverse = [&recursiveTraverse, &fun](Node* currentNode) {
+      if (currentNode != nullptr) {
+        recursiveTraverse(currentNode->next);
+        fun(currentNode->element);
       }
       };
-
-    postOrderTraverseRecursive(head, fun);
+    recursiveTraverse(head);
   }
 
   // Specific member function (inherited from ClearableContainer)

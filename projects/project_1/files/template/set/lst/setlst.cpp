@@ -90,7 +90,7 @@ namespace lasd
   template <typename Data>
   const Data& SetLst<Data>::Min() const
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -101,7 +101,7 @@ namespace lasd
   template <typename Data>
   Data SetLst<Data>::MinNRemove()
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -112,7 +112,7 @@ namespace lasd
   template <typename Data>
   void SetLst<Data>::RemoveMin()
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -123,7 +123,7 @@ namespace lasd
   template <typename Data>
   const Data& SetLst<Data>::Max() const
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -134,7 +134,7 @@ namespace lasd
   template <typename Data>
   Data SetLst<Data>::MaxNRemove()
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -145,7 +145,7 @@ namespace lasd
   template <typename Data>
   void SetLst<Data>::RemoveMax()
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -156,7 +156,7 @@ namespace lasd
   template <typename Data>
   const Data& SetLst<Data>::Predecessor(const Data& data) const
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -173,7 +173,7 @@ namespace lasd
   template <typename Data>
   Data SetLst<Data>::PredecessorNRemove(const Data& data)
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -216,7 +216,7 @@ namespace lasd
   template <typename Data>
   void SetLst<Data>::RemovePredecessor(const Data& data)
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -255,7 +255,7 @@ namespace lasd
   template <typename Data>
   const Data& SetLst<Data>::Successor(const Data& data) const
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -272,7 +272,7 @@ namespace lasd
   template <typename Data>
   Data SetLst<Data>::SuccessorNRemove(const Data& data)
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -315,7 +315,7 @@ namespace lasd
   template <typename Data>
   void SetLst<Data>::RemoveSuccessor(const Data& data)
   {
-    if (Empty())
+    if (this->Empty())
     {
       throw std::length_error("SetLst: Empty container");
     }
@@ -356,7 +356,7 @@ namespace lasd
   template <typename Data>
   bool SetLst<Data>::Insert(const Data& data)
   {
-    if (Empty())
+    if (this->Empty())
     {
       List<Data>::InsertAtFront(data);
       return true;
@@ -386,7 +386,7 @@ namespace lasd
   template <typename Data>
   bool SetLst<Data>::Insert(Data&& data)
   {
-    if (Empty())
+    if (this->Empty())
     {
       List<Data>::InsertAtFront(std::move(data));
       return true;
@@ -416,7 +416,7 @@ namespace lasd
   template <typename Data>
   bool SetLst<Data>::Remove(const Data& data)
   {
-    if (Empty())
+    if (this->Empty())
     {
       return false;
     }
@@ -454,7 +454,7 @@ namespace lasd
   template <typename Data>
   bool SetLst<Data>::Exists(const Data& data) const noexcept
   {
-    if (Empty())
+    if (this->Empty())
     {
       return false;
     }
@@ -473,7 +473,7 @@ namespace lasd
   template <typename Data>
   typename SetLst<Data>::Node* SetLst<Data>::FindNodeWithBinarySearch(const Data& data) const
   {
-    if (Empty())
+    if (this->Empty())
     {
       return nullptr;
     }
@@ -502,7 +502,7 @@ namespace lasd
     {
       ulong mid = left + (right - left) / 2;
 
-      Node* midNode = GetNodeAt(mid);
+      Node* midNode = this->GetNodeAt(mid);
 
       if (midNode->element == data)
       {
@@ -512,7 +512,7 @@ namespace lasd
         }
         else
         {
-          return GetNodeAt(mid - 1);
+          return this->GetNodeAt(mid - 1);
         }
       }
       else if (midNode->element < data)
@@ -534,7 +534,7 @@ namespace lasd
   template <typename Data>
   typename SetLst<Data>::Node* SetLst<Data>::FindSuccessorNode(const Data& data) const
   {
-    if (Empty())
+    if (this->Empty())
     {
       return nullptr;
     }
@@ -572,7 +572,7 @@ namespace lasd
   template <typename Data>
   typename SetLst<Data>::Node* SetLst<Data>::FindPredecessorNode(const Data& data) const
   {
-    if (Empty())
+    if (this->Empty())
     {
       return nullptr;
     }

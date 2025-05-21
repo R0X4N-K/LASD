@@ -12,7 +12,7 @@ namespace lasd {
   /* ************************************************************************** */
 
   template <typename Data>
-  class TestableContainer : public Container {
+  class TestableContainer : virtual public Container {
     // Must extend Container
 
   private:
@@ -26,7 +26,7 @@ namespace lasd {
   public:
 
     // Destructor
-    virtual ~TestableContainer();
+    virtual ~TestableContainer() = default;
 
     // Copy assignment
     // type operator=(argument); // Copy assignment of abstract types is not possible.

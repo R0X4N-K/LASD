@@ -16,7 +16,7 @@ namespace lasd {
   class SetVec : virtual public Set<Data>,
     virtual protected Vector<Data> {
     // Must extend Set<Data>,
-    //             ResizableContainer
+    //             Vector<Data>
 
   private:
 
@@ -107,13 +107,13 @@ namespace lasd {
 
     // Specific member function (inherited from TestableContainer)
 
-    bool Exists(const Data&) const noexcept override; // Override TestableContainer member
+    virtual bool Exists(const Data&) const noexcept override; // Override TestableContainer member
 
     /* ************************************************************************ */
 
     // Specific member function (inherited from ClearableContainer)
 
-    using Vector<Data>::Clear;
+    virtual inline void Clear() override;
 
   protected:
 

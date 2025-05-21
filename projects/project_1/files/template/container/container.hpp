@@ -10,9 +10,9 @@ namespace lasd {
 
   private:
 
+  protected:
     ulong size;
 
-  protected:
     // Default constructor
     // Container() specifiers;
     Container() { size = 0; }
@@ -54,7 +54,7 @@ namespace lasd {
   };
 
 
-  class ClearableContainer : public Container {
+  class ClearableContainer : virtual public Container {
     // Must extend Container
 
   private:
@@ -110,7 +110,7 @@ namespace lasd {
 
     // Destructor
     // ~ResizableContainer() specifiers
-    virtual ~ResizableContainer();
+    virtual ~ResizableContainer() = default;
 
     // Copy assignment
     // type operator=(argument); // Copy assignment of abstract types is not possible.
