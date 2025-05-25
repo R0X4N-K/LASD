@@ -103,6 +103,9 @@ namespace lasd {
     // ...
 
   public:
+    using LinearContainer<Data>::operator[];
+    using LinearContainer<Data>::Front;
+    using LinearContainer<Data>::Back;
 
     // Destructor
     virtual ~MutableLinearContainer() = default;

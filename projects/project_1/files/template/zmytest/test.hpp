@@ -1,10 +1,10 @@
-
-#ifndef MYTEST_HPP
-#define MYTEST_HPP
+#ifndef MYZLASDTEST_HPP
+#define MYZLASDTEST_HPP
 
 /* ************************************************************************** */
 
-void mytest();
+// Overall test function
+void mylasdtest();
 
 /* ************************************************************************** */
 

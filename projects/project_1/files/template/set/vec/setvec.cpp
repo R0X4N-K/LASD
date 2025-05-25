@@ -169,7 +169,7 @@ namespace lasd {
         }
 
         long pos = FindSuccessorPos(data);
-        if (pos < 0 || pos >= size) {
+        if (pos < 0 || static_cast<ulong>(pos) >= size) {
             throw std::length_error("SetVec: Successor not found");
         }
 
@@ -183,7 +183,7 @@ namespace lasd {
         }
 
         long pos = FindSuccessorPos(data);
-        if (pos < 0 || pos >= size) {
+        if (pos < 0 || static_cast<ulong>(pos) >= size) {
             throw std::length_error("SetVec: Successor not found");
         }
 
@@ -199,7 +199,7 @@ namespace lasd {
         }
 
         long pos = FindSuccessorPos(data);
-        if (pos < 0 || pos >= size) {
+        if (pos < 0 || static_cast<ulong>(pos) >= size) {
             throw std::length_error("SetVec: Successor not found");
         }
 
@@ -214,7 +214,7 @@ namespace lasd {
         ulong pos = BinarySearch(data);
 
         // If the element is found, return false (no duplicate allowed)
-        if (pos < size && elements[pos] == data) {
+        if (static_cast<ulong>(pos) < size && elements[pos] == data) {
             return false;
         }
 
@@ -238,7 +238,7 @@ namespace lasd {
         ulong pos = BinarySearch(data);
 
         // If the element is found, return false (no duplicate allowed)
-        if (pos < size && elements[pos] == data) {
+        if (static_cast<ulong>(pos) < size && elements[pos] == data) {
             return false;
         }
 
@@ -262,7 +262,7 @@ namespace lasd {
         ulong pos = BinarySearch(data);
 
         // If the element is not found, return false
-        if (pos >= size || elements[pos] != data) {
+        if (static_cast<ulong>(pos) >= size || elements[pos] != data) {
             return false;
         }
 
@@ -281,7 +281,7 @@ namespace lasd {
 
         // Binary search to check if the element exists
         ulong pos = BinarySearch(data);
-        return (pos < size && elements[pos] == data);
+        return (static_cast<ulong>(pos) < size && elements[pos] == data);
     }
 
     template <typename Data>
@@ -326,7 +326,7 @@ namespace lasd {
         ulong pos = BinarySearch(data);
 
         // If the exact element is found
-        if (pos < size && elements[pos] == data) {
+        if (static_cast<ulong>(pos) < size && elements[pos] == data) {
             if (pos > 0) {
                 return pos - 1; // The predecessor is the element before
             }
@@ -352,8 +352,8 @@ namespace lasd {
         ulong pos = BinarySearch(data);
 
         // If the exact element is found
-        if (pos < size && elements[pos] == data) {
-            if (pos < size - 1) {
+        if (static_cast<ulong>(pos) < size && elements[pos] == data) {
+            if (static_cast<ulong>(pos) < size - 1) {
                 return pos + 1; // The successor is the element after
             }
             else {
@@ -362,7 +362,7 @@ namespace lasd {
         }
 
         // If the element is not found, the insertion point is the successor
-        if (pos < size) {
+        if (static_cast<ulong>(pos) < size) {
             return pos;
         }
 
