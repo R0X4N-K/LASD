@@ -343,7 +343,7 @@ void ClearAndRebuild(uint& testnum, uint& testerr, lasd::List<Data>& lst, const 
     // Try operations on empty list
     bool correctExceptionFront = false;
     try {
-      Data front = lst.Front();
+      lst.Front();
     }
     catch (std::length_error&) {
       correctExceptionFront = true;
@@ -354,7 +354,7 @@ void ClearAndRebuild(uint& testnum, uint& testerr, lasd::List<Data>& lst, const 
     
     bool correctExceptionBack = false;
     try {
-      Data back = lst.Back();
+      lst.Back();
     }
     catch (std::length_error&) {
       correctExceptionBack = true;

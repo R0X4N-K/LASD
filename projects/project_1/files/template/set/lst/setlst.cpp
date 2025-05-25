@@ -8,14 +8,14 @@ namespace lasd
   SetLst<Data>::SetLst(const TraversableContainer<Data>& container)
   {
     container.Traverse([this](const Data& data)
-      { Insert(data); });
+      { Insert(data); });  // Insert each element from container into the set
   }
 
   template <typename Data>
   SetLst<Data>::SetLst(MappableContainer<Data>&& container) noexcept
   {
     container.Map([this](Data& data)
-      { Insert(std::move(data)); });
+      { Insert(std::move(data)); });  // Move each element from container into the set
   }
 
   // Copy constructor
@@ -25,13 +25,13 @@ namespace lasd
     if (!other.Empty())
     {
       other.Traverse([this](const Data& data)
-        { Insert(data); });
+        { Insert(data); });  // Insert elements one by one to maintain set properties
     }
   }
 
   // Move constructor
   template <typename Data>
-  SetLst<Data>::SetLst(SetLst<Data>&& other) noexcept : List<Data>(std::move(other)) {}
+  SetLst<Data>::SetLst(SetLst<Data>&& other) noexcept : List<Data>(std::move(other)) {}  // Use List's move constructor
 
   // Copy assignment
   template <typename Data>
@@ -39,9 +39,9 @@ namespace lasd
   {
     if (this != &other)
     {
-      Clear();
+      Clear();  // Remove all existing elements
       other.Traverse([this](const Data& data)
-        { Insert(data); });
+        { Insert(data); });  // Insert elements one by one to maintain set properties
     }
     return *this;
   }
@@ -52,7 +52,7 @@ namespace lasd
   {
     if (this != &other)
     {
-      List<Data>::operator=(std::move(other));
+      List<Data>::operator=(std::move(other));  // Use List's move assignment
     }
     return *this;
   }
@@ -63,7 +63,7 @@ namespace lasd
   {
     if (size != other.size)
     {
-      return false;
+      return false;  // Sets of different sizes cannot be equal
     }
 
     // For sets, we need to check both ways:
@@ -73,16 +73,16 @@ namespace lasd
     this->Traverse([&other, &allElementsExist](const Data& data)
       {
         if (!other.Exists(data)) {
-          allElementsExist = false;
+          allElementsExist = false;  // Element not found in other set
         } });
 
-        return allElementsExist;
+        return allElementsExist;  // All elements match
   }
 
   template <typename Data>
   bool SetLst<Data>::operator!=(const SetLst<Data>& other) const noexcept
   {
-    return !(*this == other);
+    return !(*this == other);  // Use equality operator for inverse check
   }
 
   // Specific member functions (inherited from OrderedDictionaryContainer)
@@ -95,7 +95,7 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    return head->element;
+    return head->element;  // In a sorted set, head element is the minimum
   }
 
   template <typename Data>
@@ -106,7 +106,7 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    return List<Data>::FrontNRemove();
+    return List<Data>::FrontNRemove();  // Remove and return first element
   }
 
   template <typename Data>
@@ -117,7 +117,7 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    List<Data>::RemoveFromFront();
+    List<Data>::RemoveFromFront();  // Remove first element
   }
 
   template <typename Data>
@@ -128,7 +128,7 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    return tail->element;
+    return tail->element;  // In a sorted set, tail element is the maximum
   }
 
   template <typename Data>
@@ -139,7 +139,7 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    return List<Data>::BackNRemove();
+    return List<Data>::BackNRemove();  // Remove and return last element
   }
 
   template <typename Data>
@@ -150,7 +150,7 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    List<Data>::RemoveFromBack();
+    List<Data>::RemoveFromBack();  // Remove last element
   }
 
   template <typename Data>
@@ -161,13 +161,13 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    Node* predNode = FindPredecessorNode(data);
+    Node* predNode = FindPredecessorNode(data);  // Find predecessor node
     if (predNode == nullptr)
     {
       throw std::length_error("SetLst: Predecessor not found");
     }
 
-    return predNode->element;
+    return predNode->element;  // Return predecessor element
   }
 
   template <typename Data>
@@ -178,39 +178,41 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    Node* predNode = FindPredecessorNode(data);
+    Node* predNode = FindPredecessorNode(data);  // Find predecessor node
     if (predNode == nullptr)
     {
       throw std::length_error("SetLst: Predecessor not found");
     }
 
-    Data result = predNode->element;
+    Data result = predNode->element;  // Save predecessor value
 
     // Remove the predecessor
     if (predNode == head)
     {
-      RemoveMin();
+      RemoveMin();  // Use RemoveMin if predecessor is the first element
     }
     else
     {
+      // Find the node before the predecessor
       Node* current = head;
       while (current->next != predNode)
       {
         current = current->next;
       }
 
+      // Remove predecessor from the list
       current->next = predNode->next;
 
       if (predNode == tail)
       {
-        tail = current;
+        tail = current;  // Update tail if predecessor was the last element
       }
 
-      delete predNode;
-      size--;
+      delete predNode;  // Free memory
+      size--;  // Update size
     }
 
-    return result;
+    return result;  // Return saved value
   }
 
   template <typename Data>
@@ -221,7 +223,7 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    Node* predNode = FindPredecessorNode(data);
+    Node* predNode = FindPredecessorNode(data);  // Find predecessor node
     if (predNode == nullptr)
     {
       throw std::length_error("SetLst: Predecessor not found");
@@ -230,25 +232,27 @@ namespace lasd
     // Remove the predecessor
     if (predNode == head)
     {
-      RemoveMin();
+      RemoveMin();  // Use RemoveMin if predecessor is the first element
     }
     else
     {
+      // Find the node before the predecessor
       Node* current = head;
       while (current->next != predNode)
       {
         current = current->next;
       }
 
+      // Remove predecessor from the list
       current->next = predNode->next;
 
       if (predNode == tail)
       {
-        tail = current;
+        tail = current;  // Update tail if predecessor was the last element
       }
 
-      delete predNode;
-      size--;
+      delete predNode;  // Free memory
+      size--;  // Update size
     }
   }
 
@@ -260,13 +264,13 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    Node* succNode = FindSuccessorNode(data);
+    Node* succNode = FindSuccessorNode(data);  // Find successor node
     if (succNode == nullptr)
     {
       throw std::length_error("SetLst: Successor not found");
     }
 
-    return succNode->element;
+    return succNode->element;  // Return successor element
   }
 
   template <typename Data>
@@ -277,39 +281,41 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    Node* succNode = FindSuccessorNode(data);
+    Node* succNode = FindSuccessorNode(data);  // Find successor node
     if (succNode == nullptr)
     {
       throw std::length_error("SetLst: Successor not found");
     }
 
-    Data result = succNode->element;
+    Data result = succNode->element;  // Save successor value
 
     // Remove the successor
     if (succNode == head)
     {
-      RemoveMin();
+      RemoveMin();  // Use RemoveMin if successor is the first element
     }
     else
     {
+      // Find the node before the successor
       Node* current = head;
       while (current->next != succNode)
       {
         current = current->next;
       }
 
+      // Remove successor from the list
       current->next = succNode->next;
 
       if (succNode == tail)
       {
-        tail = current;
+        tail = current;  // Update tail if successor was the last element
       }
 
-      delete succNode;
-      size--;
+      delete succNode;  // Free memory
+      size--;  // Update size
     }
 
-    return result;
+    return result;  // Return saved value
   }
 
   template <typename Data>
@@ -320,7 +326,7 @@ namespace lasd
       throw std::length_error("SetLst: Empty container");
     }
 
-    Node* succNode = FindSuccessorNode(data);
+    Node* succNode = FindSuccessorNode(data);  // Find successor node
     if (succNode == nullptr)
     {
       throw std::length_error("SetLst: Successor not found");
@@ -329,25 +335,27 @@ namespace lasd
     // Remove the successor
     if (succNode == head)
     {
-      RemoveMin();
+      RemoveMin();  // Use RemoveMin if successor is the first element
     }
     else
     {
+      // Find the node before the successor
       Node* current = head;
       while (current->next != succNode)
       {
         current = current->next;
       }
 
+      // Remove successor from the list
       current->next = succNode->next;
 
       if (succNode == tail)
       {
-        tail = current;
+        tail = current;  // Update tail if successor was the last element
       }
 
-      delete succNode;
-      size--;
+      delete succNode;  // Free memory
+      size--;  // Update size
     }
   }
 
@@ -358,29 +366,30 @@ namespace lasd
   {
     if (this->Empty())
     {
-      List<Data>::InsertAtFront(data);
+      List<Data>::InsertAtFront(data);  // Insert into empty list
       return true;
     }
 
-    Node* predNode = FindNodeWithBinarySearch(data);
+    Node* predNode = FindNodeWithBinarySearch(data);  // Find insertion point
 
+    // Check if element already exists
     if (predNode != nullptr && predNode->next != nullptr && predNode->next->element == data)
     {
-      return false;
+      return false;  // Element already exists
     }
 
     if (predNode == nullptr)
     {
       if (head->element == data)
       {
-        return false;
+        return false;  // Element already exists at head
       }
 
-      List<Data>::InsertAtFront(data);
+      List<Data>::InsertAtFront(data);  // Insert at front if smaller than head
       return true;
     }
 
-    return InsertInOrder(predNode, data);
+    return InsertInOrder(predNode, data);  // Insert at correct position to maintain order
   }
 
   template <typename Data>
@@ -388,29 +397,30 @@ namespace lasd
   {
     if (this->Empty())
     {
-      List<Data>::InsertAtFront(std::move(data));
+      List<Data>::InsertAtFront(std::move(data));  // Insert into empty list
       return true;
     }
 
-    Node* predNode = FindNodeWithBinarySearch(data);
+    Node* predNode = FindNodeWithBinarySearch(data);  // Find insertion point
 
+    // Check if element already exists
     if (predNode != nullptr && predNode->next != nullptr && predNode->next->element == data)
     {
-      return false;
+      return false;  // Element already exists
     }
 
     if (predNode == nullptr)
     {
       if (head->element == data)
       {
-        return false;
+        return false;  // Element already exists at head
       }
 
-      List<Data>::InsertAtFront(std::move(data));
+      List<Data>::InsertAtFront(std::move(data));  // Insert at front if smaller than head
       return true;
     }
 
-    return InsertInOrder(predNode, std::move(data));
+    return InsertInOrder(predNode, std::move(data));  // Insert at correct position to maintain order
   }
 
   template <typename Data>
@@ -418,35 +428,36 @@ namespace lasd
   {
     if (this->Empty())
     {
-      return false;
+      return false;  // Cannot remove from empty set
     }
 
     // If the element is the head
     if (head->element == data)
     {
-      RemoveMin();
+      RemoveMin();  // Use RemoveMin for head element
       return true;
     }
 
     // If the element is the tail
     if (tail->element == data)
     {
-      RemoveMax();
+      RemoveMax();  // Use RemoveMax for tail element
       return true;
     }
 
-    Node* predNode = FindNodeWithBinarySearch(data);
+    Node* predNode = FindNodeWithBinarySearch(data);  // Find node before target
 
+    // Check if element exists
     if (predNode != nullptr && predNode->next != nullptr && predNode->next->element == data)
     {
-      Node* toDelete = predNode->next;
-      predNode->next = toDelete->next;
-      delete toDelete;
-      size--;
+      Node* toDelete = predNode->next;  // Node to remove
+      predNode->next = toDelete->next;  // Remove from list
+      delete toDelete;  // Free memory
+      size--;  // Update size
       return true;
     }
 
-    return false;
+    return false;  // Element not found
   }
 
   // Specific member function (inherited from TestableContainer)
@@ -456,16 +467,16 @@ namespace lasd
   {
     if (this->Empty())
     {
-      return false;
+      return false;  // Empty set contains no elements
     }
 
     if (head->element == data)
     {
-      return true;
+      return true;  // Check head element first
     }
 
-    Node* predNode = FindNodeWithBinarySearch(data);
-    return (predNode != nullptr && predNode->next != nullptr && predNode->next->element == data);
+    Node* predNode = FindNodeWithBinarySearch(data);  // Find node before target
+    return (predNode != nullptr && predNode->next != nullptr && predNode->next->element == data);  // Check if element exists
   }
 
   // Auxiliary functions
@@ -475,22 +486,22 @@ namespace lasd
   {
     if (this->Empty())
     {
-      return nullptr;
+      return nullptr;  // Empty list
     }
 
     if (data < head->element)
     {
-      return nullptr;
+      return nullptr;  // Data is smaller than minimum
     }
 
     if (data == head->element)
     {
-      return nullptr;
+      return nullptr;  // Data equals head element
     }
 
     if (data > tail->element)
     {
-      return tail;
+      return tail;  // Data is larger than maximum
     }
 
     ulong left = 0;
@@ -498,37 +509,38 @@ namespace lasd
 
     Node* result = nullptr;
 
+    // Binary search implementation
     while (left <= right)
     {
-      ulong mid = left + (right - left) / 2;
+      ulong mid = left + (right - left) / 2;  // Calculate middle index (avoids overflow)
 
-      Node* midNode = this->GetNodeAt(mid);
+      Node* midNode = this->GetNodeAt(mid);  // Get node at middle index
 
       if (midNode->element == data)
       {
         if (mid == 0)
         {
-          return nullptr;
+          return nullptr;  // If first element, no predecessor
         }
         else
         {
-          return this->GetNodeAt(mid - 1);
+          return this->GetNodeAt(mid - 1);  // Return node before the match
         }
       }
       else if (midNode->element < data)
       {
-        result = midNode;
-        left = mid + 1;
+        result = midNode;  // Update result with potential predecessor
+        left = mid + 1;  // Search right half
       }
       else
       {
         if (mid == 0)
-          break;  // Evita underflow
-        right = mid - 1;
+          break;  // Avoid underflow
+        right = mid - 1;  // Search left half
       }
     }
 
-    return result;
+    return result;  // Return predecessor node or nullptr
   }
 
   template <typename Data>
@@ -536,37 +548,37 @@ namespace lasd
   {
     if (this->Empty())
     {
-      return nullptr;
+      return nullptr;  // Empty list
     }
 
     // If data is greater than or equal to the maximum, there is no successor
     if (data >= tail->element)
     {
-      return nullptr;
+      return nullptr;  // No successor if data >= maximum
     }
 
     if (data < head->element)
     {
-      return head;
+      return head;  // Head is successor if data < minimum
     }
 
-    Node* predNode = FindNodeWithBinarySearch(data);
+    Node* predNode = FindNodeWithBinarySearch(data);  // Find predecessor node
 
     if (predNode == nullptr)
     {
       if (data == head->element && head->next != nullptr)
       {
-        return head->next;
+        return head->next;  // If data equals head, successor is next node
       }
-      return head;
+      return head;  // Otherwise head is successor
     }
 
     if (predNode->next != nullptr && predNode->next->element == data)
     {
-      return predNode->next->next;
+      return predNode->next->next;  // If found exact match, successor is next node
     }
 
-    return predNode->next;
+    return predNode->next;  // Otherwise successor is next node after predecessor
   }
 
   template <typename Data>
@@ -574,29 +586,29 @@ namespace lasd
   {
     if (this->Empty())
     {
-      return nullptr;
+      return nullptr;  // Empty list
     }
 
     // If data is less than or equal to the minimum, there is no predecessor
     if (data <= head->element)
     {
-      return nullptr;
+      return nullptr;  // No predecessor if data <= minimum
     }
 
     // If data is greater than the maximum, the predecessor is the maximum
     if (data > tail->element)
     {
-      return tail;
+      return tail;  // Tail is predecessor if data > maximum
     }
 
-    Node* predNode = FindNodeWithBinarySearch(data);
+    Node* predNode = FindNodeWithBinarySearch(data);  // Find predecessor node
 
     if (predNode != nullptr && predNode->next != nullptr && predNode->next->element == data)
     {
-      return predNode;
+      return predNode;  // If found exact match, predecessor is previous node
     }
 
-    return predNode;
+    return predNode;  // Otherwise return found predecessor
   }
 
   template <typename Data>
@@ -604,21 +616,22 @@ namespace lasd
   {
     if (predNode == nullptr)
     {
-      List<Data>::InsertAtFront(data);
+      List<Data>::InsertAtFront(data);  // Insert at front if no predecessor
       return true;
     }
 
     if (predNode == tail && predNode->element < data)
     {
-      List<Data>::InsertAtBack(data);
+      List<Data>::InsertAtBack(data);  // Insert at back if larger than maximum
       return true;
     }
 
-    Node* newNode = new Node(data);
-    newNode->next = predNode->next;
-    predNode->next = newNode;
+    // Insert between predecessor and its next node
+    Node* newNode = new Node(data);  // Create new node
+    newNode->next = predNode->next;  // Link to next node
+    predNode->next = newNode;  // Link from predecessor
 
-    size++;
+    size++;  // Update size
     return true;
   }
 
@@ -627,21 +640,22 @@ namespace lasd
   {
     if (predNode == nullptr)
     {
-      List<Data>::InsertAtFront(std::move(data));
+      List<Data>::InsertAtFront(std::move(data));  // Insert at front if no predecessor
       return true;
     }
 
     if (predNode == tail && predNode->element < data)
     {
-      List<Data>::InsertAtBack(std::move(data));
+      List<Data>::InsertAtBack(std::move(data));  // Insert at back if larger than maximum
       return true;
     }
 
-    Node* newNode = new Node(std::move(data));
-    newNode->next = predNode->next;
-    predNode->next = newNode;
+    // Insert between predecessor and its next node
+    Node* newNode = new Node(std::move(data));  // Create new node with moved data
+    newNode->next = predNode->next;  // Link to next node
+    predNode->next = newNode;  // Link from predecessor
 
-    size++;
+    size++;  // Update size
     return true;
   }
 

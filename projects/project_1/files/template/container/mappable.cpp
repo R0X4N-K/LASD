@@ -6,7 +6,7 @@ namespace lasd {
 
   template <typename Data>
   void PreOrderMappableContainer<Data>::Map(MapFun fun) {
-    PreOrderMap(fun);
+    PreOrderMap(fun);  // Default Map implementation delegates to PreOrderMap
   }
 
   /* ************************************************************************** */
@@ -15,7 +15,7 @@ namespace lasd {
 
   template <typename Data>
   void PostOrderMappableContainer<Data>::Map(MapFun fun) {
-    PostOrderMap(fun);
+    PostOrderMap(fun);  // Default Map implementation delegates to PostOrderMap
   }
 
   /* ************************************************************************** */

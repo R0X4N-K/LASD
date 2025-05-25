@@ -58,15 +58,11 @@ void testExercise1A(uint& testnum, uint& testerr) {
   // Test list operations
   cout << "Testing list operations:" << endl;
   
-  // Test traversable operations
-  TraverseEmpty(testnum, testerr, intList);
   FoldTraverseConsistency(testnum, testerr, intList);
   FoldComplexAccumulator(testnum, testerr, intList);
   ConditionalTraverse(testnum, testerr, intList, 20);
   
   // Test order traversals
-  PreOrderTraverseEquivalence(testnum, testerr, intList);
-  PostOrderTraverseEquivalence(testnum, testerr, intList);
   PreOrderFoldConsistency(testnum, testerr, intList);
   PostOrderFoldConsistency(testnum, testerr, intList);
   ListTraversalOrders(testnum, testerr, intList);

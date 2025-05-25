@@ -16,6 +16,7 @@ namespace lasd {
     virtual public PostOrderTraversableContainer<Data> {
     // Must extend PreOrderTraversableContainer<Data>,
     //             PostOrderTraversableContainer<Data>
+    // Represents a container where elements are arranged in a linear sequence
 
   private:
 
@@ -54,13 +55,13 @@ namespace lasd {
     // Specific member functions
 
     // type operator[](argument) specifiers; // (non-mutable version; concrete function must throw std::out_of_range when out of range)
-    virtual const Data& operator[](const ulong) const = 0;
+    virtual const Data& operator[](const ulong) const = 0;  // Access element at specific index (read-only)
 
     // type Front() specifiers; // (non-mutable version; concrete function must throw std::length_error when empty)
-    virtual const Data& Front() const = 0;
+    virtual const Data& Front() const = 0;  // Access the first element (read-only)
 
     // type Back() specifiers; // (non-mutable version; concrete function must throw std::length_error when empty)
-    virtual const Data& Back() const = 0;
+    virtual const Data& Back() const = 0;  // Access the last element (read-only)
 
     /* ************************************************************************ */
 
@@ -68,19 +69,19 @@ namespace lasd {
 
     using typename TraversableContainer<Data>::TraverseFun;
 
-    void Traverse(TraverseFun) const override;
+    void Traverse(TraverseFun) const override;  // Generic traversal implementation
 
     /* ************************************************************************ */
 
     // Specific member function (inherited from PreOrderTraversableContainer)
 
-    void PreOrderTraverse(TraverseFun) const override;
+    void PreOrderTraverse(TraverseFun) const override;  // Pre-order traversal for linear structures
 
     /* ************************************************************************ */
 
     // Specific member function (inherited from PostOrderTraversableContainer)
 
-    void PostOrderTraverse(TraverseFun) const override;
+    void PostOrderTraverse(TraverseFun) const override;  // Post-order traversal for linear structures
 
   };
 
@@ -93,6 +94,7 @@ namespace lasd {
     // Must extend LinearContainer<Data>,
     //             PreOrderMappableContainer<Data>,
     //             PostOrderMappableContainer<Data>
+    // Extends LinearContainer with mutable access to elements
 
   private:
 
@@ -103,8 +105,8 @@ namespace lasd {
     // ...
 
   public:
-    using LinearContainer<Data>::operator[];
-    using LinearContainer<Data>::Front;
+    using LinearContainer<Data>::operator[];  // Import const versions of these operations
+    using LinearContainer<Data>::Front;       // from base class to avoid hiding them
     using LinearContainer<Data>::Back;
 
     // Destructor
@@ -125,13 +127,13 @@ namespace lasd {
     // Specific member functions
 
     // type operator[](argument) specifiers; // (mutable version; concrete function must throw std::out_of_range when out of range)
-    virtual Data& operator[](const ulong) = 0;
+    virtual Data& operator[](const ulong) = 0;  // Access element at specific index (mutable)
 
     // type Front() specifiers; // (mutable version; concrete function must throw std::length_error when empty)
-    virtual Data& Front() = 0;
+    virtual Data& Front() = 0;  // Access the first element (mutable)
 
     // type Back() specifiers; // (mutable version; concrete function must throw std::length_error when empty)
-    virtual Data& Back() = 0;
+    virtual Data& Back() = 0;  // Access the last element (mutable)
 
     /* ************************************************************************ */
 
@@ -139,25 +141,26 @@ namespace lasd {
 
     using typename MappableContainer<Data>::MapFun;
 
-    void Map(MapFun) override;
+    void Map(MapFun) override;  // Generic mapping implementation
 
     /* ************************************************************************ */
 
     // Specific member function (inherited from PreOrderMappableContainer)
 
-    void PreOrderMap(MapFun) override;
+    void PreOrderMap(MapFun) override;  // Pre-order mapping for linear structures
 
     /* ************************************************************************ */
 
     // Specific member function (inherited from PostOrderMappableContainer)
 
-    void PostOrderMap(MapFun) override;
+    void PostOrderMap(MapFun) override;  // Post-order mapping for linear structures
 
   };
 
   template <typename Data>
   class SortableLinearContainer : virtual public MutableLinearContainer<Data> {
     // Must extend MutableLinearContainer<Data>
+    // Extends MutableLinearContainer with sorting capabilities
 
   private:
 
@@ -186,7 +189,7 @@ namespace lasd {
 
     // Specific member function
 
-    virtual void Sort() = 0;
+    virtual void Sort() = 0;  // Pure virtual function to sort the container elements
 
   protected:
 
@@ -200,6 +203,6 @@ namespace lasd {
 
 }
 
-#include "linear.cpp"
+#include "linear.cpp"  // Include implementation file
 
 #endif

@@ -54,7 +54,7 @@ void AccessOutOfRange(uint& testnum, uint& testerr, const lasd::LinearContainer<
   testnum++;
   try {
     std::cout << " " << testnum << " (" << testerr << ") Out-of-range test with index = Size(): ";
-    Data val = con[con.Size()];
+    con[con.Size()];
     std::cout << "No exception thrown: Error!" << std::endl;
     tst = false;
   }
@@ -72,7 +72,7 @@ void AccessOutOfRange(uint& testnum, uint& testerr, const lasd::LinearContainer<
   testnum++;
   try {
     std::cout << " " << testnum << " (" << testerr << ") Out-of-range test with large index: ";
-    Data val = con[con.Size() + 1000];
+    con[con.Size() + 1000];
     std::cout << "No exception thrown: Error!" << std::endl;
     tst = false;
   }

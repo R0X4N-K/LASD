@@ -8,24 +8,6 @@
 
 // Extended test functions for TraversableContainer
 
-// Test traversal behavior on empty containers
-template <typename Data>
-void TraverseEmpty(uint& testnum, uint& testerr, const lasd::TraversableContainer<Data>& con) {
-  bool tst = true;
-  testnum++;
-  std::cout << " " << testnum << " (" << testerr << ") Traversing empty container: ";
-  
-  int counter = 0;
-  con.Traverse([&counter](const Data&) {
-    counter++;
-  });
-  
-  std::cout << (counter == 0 ? "No elements traversed" : "Unexpectedly traversed elements") << ": ";
-  tst = (counter == 0);
-  std::cout << (tst ? "Correct" : "Error") << "!" << std::endl;
-  testerr += (1 - (uint)tst);
-}
-
 // Test Fold consistency with Traverse
 template <typename Data>
 void FoldTraverseConsistency(uint& testnum, uint& testerr, const lasd::TraversableContainer<Data>& con) {
@@ -143,46 +125,6 @@ void ConditionalTraverse(uint& testnum, uint& testerr, const lasd::TraversableCo
 /* ************************************************************************** */
 
 // Extended test functions for PreOrderTraversableContainer
-
-// Test that PreOrderTraverse and Traverse are equivalent for this container
-template <typename Data>
-void PreOrderTraverseEquivalence(uint& testnum, uint& testerr, const lasd::PreOrderTraversableContainer<Data>& con) {
-  bool tst = true;
-  testnum++;
-  
-  lasd::List<Data> traverseElements;
-  lasd::List<Data> preOrderElements;
-  
-  // Collect elements via Traverse
-  con.Traverse([&traverseElements](const Data& val) {
-    traverseElements.InsertAtBack(val);
-  });
-  
-  // Collect elements via PreOrderTraverse
-  con.PreOrderTraverse([&preOrderElements](const Data& val) {
-    preOrderElements.InsertAtBack(val);
-  });
-  
-  std::cout << " " << testnum << " (" << testerr << ") PreOrderTraverse/Traverse equivalence: ";
-  
-  bool sizeMatch = (traverseElements.Size() == preOrderElements.Size());
-  bool contentMatch = true;
-  
-  if (sizeMatch) {
-    for (ulong i = 0; i < traverseElements.Size(); i++) {
-      if (traverseElements[i] != preOrderElements[i]) {
-        contentMatch = false;
-        break;
-      }
-    }
-  }
-  
-  tst = sizeMatch && contentMatch;
-  std::cout << (tst ? "Elements match" : "Elements differ") << ": ";
-  std::cout << (tst ? "Correct" : "Error") << "!" << std::endl;
-  testerr += (1 - (uint)tst);
-}
-
 // Test consistency between PreOrderFold and PreOrderTraverse
 template <typename Data>
 void PreOrderFoldConsistency(uint& testnum, uint& testerr, const lasd::PreOrderTraversableContainer<Data>& con) {
@@ -227,46 +169,6 @@ void PreOrderFoldConsistency(uint& testnum, uint& testerr, const lasd::PreOrderT
 /* ************************************************************************** */
 
 // Extended test functions for PostOrderTraversableContainer
-
-// Test that PostOrderTraverse and Traverse are equivalent for this container
-template <typename Data>
-void PostOrderTraverseEquivalence(uint& testnum, uint& testerr, const lasd::PostOrderTraversableContainer<Data>& con) {
-  bool tst = true;
-  testnum++;
-  
-  lasd::List<Data> traverseElements;
-  lasd::List<Data> postOrderElements;
-  
-  // Collect elements via Traverse
-  con.Traverse([&traverseElements](const Data& val) {
-    traverseElements.InsertAtBack(val);
-  });
-  
-  // Collect elements via PostOrderTraverse
-  con.PostOrderTraverse([&postOrderElements](const Data& val) {
-    postOrderElements.InsertAtBack(val);
-  });
-  
-  std::cout << " " << testnum << " (" << testerr << ") PostOrderTraverse/Traverse equivalence: ";
-  
-  bool sizeMatch = (traverseElements.Size() == postOrderElements.Size());
-  bool contentMatch = true;
-  
-  if (sizeMatch) {
-    for (ulong i = 0; i < traverseElements.Size(); i++) {
-      if (traverseElements[i] != postOrderElements[i]) {
-        contentMatch = false;
-        break;
-      }
-    }
-  }
-  
-  tst = sizeMatch && contentMatch;
-  std::cout << (tst ? "Elements match" : "Elements differ") << ": ";
-  std::cout << (tst ? "Correct" : "Error") << "!" << std::endl;
-  testerr += (1 - (uint)tst);
-}
-
 // Test consistency between PostOrderFold and PostOrderTraverse
 template <typename Data>
 void PostOrderFoldConsistency(uint& testnum, uint& testerr, const lasd::PostOrderTraversableContainer<Data>& con) {

@@ -22,9 +22,9 @@ namespace lasd {
 
   protected:
 
-    using Container::size;
+    using Container::size;  // Inherit size member from Container base class
 
-    Data* elements = nullptr;
+    Data* elements = nullptr;  // Pointer to the dynamically allocated array of elements
 
     // ...
 
@@ -36,9 +36,9 @@ namespace lasd {
     /* ************************************************************************ */
 
     // Specific constructors
-    Vector(const ulong); // A vector with a given initial dimension
-    Vector(const TraversableContainer<Data>&); // A vector obtained from a TraversableContainer
-    Vector(MappableContainer<Data>&&) noexcept; // A vector obtained from a MappableContainer
+    Vector(const ulong);  // A vector with a given initial dimension
+    Vector(const TraversableContainer<Data>&);  // A vector obtained from a TraversableContainer
+    Vector(MappableContainer<Data>&&) noexcept;  // A vector obtained from a MappableContainer
 
     /* ************************************************************************ */
 
@@ -71,33 +71,33 @@ namespace lasd {
 
     // Specific member functions (inherited from MutableLinearContainer)
 
-    Data& operator[](const ulong) override; // Override MutableLinearContainer member (must throw std::out_of_range when out of range)
+    Data& operator[](const ulong) override;  // Access element at specific index (mutable)
 
-    Data& Front() override; // Override MutableLinearContainer member (must throw std::length_error when empty)
+    Data& Front() override;  // Access first element (mutable)
 
-    Data& Back() override; // Override MutableLinearContainer member (must throw std::length_error when empty)
+    Data& Back() override;  // Access last element (mutable)
 
     /* ************************************************************************ */
 
     // Specific member functions (inherited from LinearContainer)
 
-    const Data& operator[](const ulong) const override; // Override LinearContainer member (must throw std::out_of_range when out of range)
+    const Data& operator[](const ulong) const override;  // Access element at specific index (read-only)
 
-    const Data& Front() const override; // Override LinearContainer member (must throw std::length_error when empty)
+    const Data& Front() const override;  // Access first element (read-only)
 
-    const Data& Back() const override; // Override LinearContainer member (must throw std::length_error when empty)
+    const Data& Back() const override;  // Access last element (read-only)
 
     /* ************************************************************************ */
 
     // Specific member function (inherited from ResizableContainer)
 
-    void Resize(const ulong) override; // Override ResizableContainer member
+    void Resize(const ulong) override;  // Change the capacity of the vector
 
     /* ************************************************************************ */
 
     // Specific member function (inherited from ClearableContainer)
 
-    void Clear() override; // Override ClearableContainer member
+    void Clear() override;  // Remove all elements from the vector
 
   protected:
 
@@ -111,6 +111,7 @@ namespace lasd {
   class SortableVector : virtual public Vector<Data>, virtual public SortableLinearContainer<Data> {
     // Must extend Vector<Data>,
     //             SortableLinearContainer<Data>
+    // Extends Vector with sorting capabilities
 
   private:
 
@@ -118,7 +119,7 @@ namespace lasd {
 
   protected:
 
-    using Container::size;
+    using Container::size;  // Inherit size member from Container base class
 
     // ...
 
@@ -130,9 +131,9 @@ namespace lasd {
     /* ************************************************************************ */
 
     // Specific constructors
-    SortableVector(const ulong); // A vector with a given initial dimension
-    SortableVector(const TraversableContainer<Data>&); // A vector obtained from a TraversableContainer
-    SortableVector(MappableContainer<Data>&&) noexcept; // A vector obtained from a MappableContainer
+    SortableVector(const ulong);  // A vector with a given initial dimension
+    SortableVector(const TraversableContainer<Data>&);  // A vector obtained from a TraversableContainer
+    SortableVector(MappableContainer<Data>&&) noexcept;  // A vector obtained from a MappableContainer
 
     /* ************************************************************************ */
 
@@ -159,12 +160,12 @@ namespace lasd {
 
     // Specific member function (inherited from SortableLinearContainer)
 
-    void Sort() override;
+    void Sort() override;  // Sort elements in the vector
 
   protected:
 
     // Auxiliary functions for Sort
-    void InsertionSort(Data*, ulong);
+    void InsertionSort(Data*, ulong);  // Helper method implementing insertion sort algorithm
 
   };
 
@@ -172,6 +173,6 @@ namespace lasd {
 
 }
 
-#include "vector.cpp"
+#include "vector.cpp"  // Include implementation file
 
 #endif
