@@ -1,4 +1,3 @@
-
 #ifndef MAPPABLE_HPP
 #define MAPPABLE_HPP
 
@@ -14,150 +13,159 @@
 
 namespace lasd {
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-template <typename Data>
-class MappableContainer {
-  // Must extend TraversableContainer<Data>
+  template <typename Data>
+  class MappableContainer : virtual public TraversableContainer<Data> {
+    // Must extend TraversableContainer<Data>
 
-private:
+  private:
 
-  // ...
+    // ...
 
-protected:
+  protected:
 
-  // ...
+    // ...
 
-public:
+  public:
 
-  // Destructor
-  // ~MappableContainer() specifiers
+    // Destructor
+    virtual ~MappableContainer() = default;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types is not possible.
+    // Copy assignment
+    // type operator=(argument); // Copy assignment of abstract types is not possible.
+    MappableContainer& operator=(const MappableContainer&) = delete;
 
-  // Move assignment
-  // type operator=(argument); // Move assignment of abstract types is not possible.
+    // Move assignment
+    // type operator=(argument); // Move assignment of abstract types is not possible.
+    MappableContainer& operator=(MappableContainer&&) noexcept = delete;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
+    // Comparison operators
+    // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
+    bool operator==(const MappableContainer&) const noexcept = delete;
 
-  /* ************************************************************************ */
+    // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
+    bool operator!=(const MappableContainer&) const noexcept = delete;
 
-  // Specific member function
+    /* ************************************************************************ */
 
-  // using MapFun = std::function<void(Data &)>;
+    // Specific member function
+    using MapFun = std::function<void(Data&)>;
+    virtual void Map(MapFun) = 0;
 
-  // type Map(argument) specifiers;
+  };
 
-};
+  /* ************************************************************************** */
 
-/* ************************************************************************** */
+  template <typename Data>
+  class PreOrderMappableContainer : virtual public MappableContainer<Data>,
+    virtual public PreOrderTraversableContainer<Data> {
+    // Must extend MappableContainer<Data>,
+    //             PreOrderTraversableContainer<Data>
 
-template <typename Data>
-class PreOrderMappableContainer {
-  // Must extend MappableContainer<Data>,
-  //             PreOrderTraversableContainer<Data>
+  private:
 
-private:
+    // ...
 
-  // ...
+  protected:
 
-protected:
+    // ...
 
-  // ...
+  public:
 
-public:
+    // Destructor
+    virtual ~PreOrderMappableContainer() = default;
 
-  // Destructor
-  // ~PreOrderMappableContainer() specifiers
+    /* ************************************************************************ */
 
-  /* ************************************************************************ */
+    // Copy assignment
+    // type operator=(argument); // Copy assignment of abstract types is not possible.
+    PreOrderMappableContainer& operator=(const PreOrderMappableContainer&) = delete;
 
-  // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types is not possible.
+    // Move assignment
+    // type operator=(argument); // Move assignment of abstract types is not possible.
+    PreOrderMappableContainer& operator=(PreOrderMappableContainer&&) noexcept = delete;
 
-  // Move assignment
-  // type operator=(argument); // Move assignment of abstract types is not possible.
+    /* ************************************************************************ */
 
-  /* ************************************************************************ */
+    // Comparison operators
+    // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
+    bool operator==(const PreOrderMappableContainer&) const noexcept = delete;
 
-  // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
+    // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
+    bool operator!=(const PreOrderMappableContainer&) const noexcept = delete;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Specific member function
+    // Specific member function
+    using typename MappableContainer<Data>::MapFun;
+    virtual void PreOrderMap(MapFun) = 0;
 
-  // using typename MappableContainer<Data>::MapFun;
+    /* ************************************************************************ */
 
-  // type PreOrderMap(argument) specifiers;
+    // Specific member function (inherited from MappableContainer)
+    virtual void Map(MapFun) override;
 
-  /* ************************************************************************ */
+  };
 
-  // Specific member function (inherited from MappableContainer)
+  /* ************************************************************************** */
 
-  // type Map(argument) specifiers; // Override MappableContainer member
+  template <typename Data>
+  class PostOrderMappableContainer : virtual public MappableContainer<Data>,
+    virtual public PostOrderTraversableContainer<Data> {
+    // Must extend MappableContainer<Data>,
+    //             PostOrderTraversableContainer<Data>
 
-};
+  private:
 
-/* ************************************************************************** */
+    // ...
 
-template <typename Data>
-class PostOrderMappableContainer {
-  // Must extend MappableContainer<Data>,
-  //             PostOrderTraversableContainer<Data>
+  protected:
 
-private:
+    // ...
 
-  // ...
+  public:
 
-protected:
+    // Destructor
+    virtual ~PostOrderMappableContainer() = default;
 
-  // ...
+    /* ************************************************************************ */
 
-public:
+    // Copy assignment
+    // type operator=(argument); // Copy assignment of abstract types is not possible.
+    PostOrderMappableContainer& operator=(const PostOrderMappableContainer&) = delete;
 
-  // Destructor
-  // ~PostOrderMappableContainer() specifiers
+    // Move assignment
+    // type operator=(argument); // Move assignment of abstract types is not possible.
+    PostOrderMappableContainer& operator=(PostOrderMappableContainer&&) noexcept = delete;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types is not possible.
+    // Comparison operators
+    // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
+    bool operator==(const PostOrderMappableContainer&) const noexcept = delete;
 
-  // Move assignment
-  // type operator=(argument); // Move assignment of abstract types is not possible.
+    // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
+    bool operator!=(const PostOrderMappableContainer&) const noexcept = delete;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
+    // Specific member function
+    using typename MappableContainer<Data>::MapFun;
+    virtual void PostOrderMap(MapFun) = 0;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Specific member function
+    // Specific member function (inherited from MappableContainer)
+    virtual void Map(MapFun) override;
 
-  // using typename MappableContainer<Data>::MapFun;
+  };
 
-  // type PostOrderMap(argument) specifiers;
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from MappableContainer)
-
-  // type Map(argument) specifiers; // Override MappableContainer member
-
-};
-
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
 }
 
