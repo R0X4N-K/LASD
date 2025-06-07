@@ -19,7 +19,7 @@ using namespace std;
 
 /* ************************************************************************** */
 
-void stestVectorInt(uint& testnum, uint& testerr) {
+void stestVectorInt(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of Vector<int> Test:" << endl;
   try {
@@ -80,7 +80,7 @@ void stestVectorInt(uint& testnum, uint& testerr) {
   testerr += loctesterr;
 }
 
-void stestVectorDouble(uint& testnum, uint& testerr) {
+void stestVectorDouble(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of Vector<double> Test:" << endl;
   try {
@@ -109,7 +109,7 @@ void stestVectorDouble(uint& testnum, uint& testerr) {
   testerr += loctesterr;
 }
 
-void stestVectorString(uint& testnum, uint& testerr) {
+void stestVectorString(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of Vector<string> Test:" << endl;
   try {
@@ -126,7 +126,7 @@ void stestVectorString(uint& testnum, uint& testerr) {
 
     Exists(loctestnum, loctesterr, vec, true, string("A"));
 
-    MapPreOrder(loctestnum, loctesterr, vec, true, [](string& str) { MapStringAppend(str, string(" ")); });
+    MapPreOrder(loctestnum, loctesterr, vec, true, [](string & str) { MapStringAppend(str, string(" ")); });
     TraversePreOrder(loctestnum, loctesterr, vec, true, &TraversePrint<string>);
     FoldPreOrder(loctestnum, loctesterr, vec, true, &FoldStringConcatenate, string("X"), string("XA B "));
     FoldPostOrder(loctestnum, loctesterr, vec, true, &FoldStringConcatenate, string("X"), string("XB A "));
@@ -135,7 +135,7 @@ void stestVectorString(uint& testnum, uint& testerr) {
 
     lasd::SortableVector<string> copvec(vec);
     EqualVector(loctestnum, loctesterr, vec, copvec, true);
-    MapPreOrder(loctestnum, loctesterr, vec, true, [](string& str) { MapStringAppend(str, string("!")); });
+    MapPreOrder(loctestnum, loctesterr, vec, true, [](string & str) { MapStringAppend(str, string("!")); });
     NonEqualVector(loctestnum, loctesterr, vec, copvec, true);
 
     copvec = move(vec);
@@ -161,7 +161,7 @@ void stestVectorString(uint& testnum, uint& testerr) {
   testerr += loctesterr;
 }
 
-void stestVector(uint& testnum, uint& testerr) {
+void stestVector(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   stestVectorInt(loctestnum, loctesterr);
   stestVectorDouble(loctestnum, loctesterr);
@@ -173,7 +173,7 @@ void stestVector(uint& testnum, uint& testerr) {
 
 /* ************************************************************************** */
 
-void stestListInt(uint& testnum, uint& testerr) {
+void stestListInt(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of List<int> Test:" << endl;
   try {
@@ -259,7 +259,7 @@ void stestListInt(uint& testnum, uint& testerr) {
   testerr += loctesterr;
 }
 
-void stestListDouble(uint& testnum, uint& testerr) {
+void stestListDouble(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of List<double> Test:" << endl;
   try {
@@ -296,7 +296,7 @@ void stestListDouble(uint& testnum, uint& testerr) {
   testerr += loctesterr;
 }
 
-void stestListString(uint& testnum, uint& testerr) {
+void stestListString(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of List<string> Test:" << endl;
   try {
@@ -312,7 +312,7 @@ void stestListString(uint& testnum, uint& testerr) {
 
     Exists(loctestnum, loctesterr, lst, true, string("B"));
 
-    MapPreOrder(loctestnum, loctesterr, lst, true, [](string& str) { MapStringAppend(str, string(" ")); });
+    MapPreOrder(loctestnum, loctesterr, lst, true, [](string & str) { MapStringAppend(str, string(" ")); });
     TraversePreOrder(loctestnum, loctesterr, lst, true, &TraversePrint<string>);
     FoldPreOrder(loctestnum, loctesterr, lst, true, &FoldStringConcatenate, string("X"), string("XA B "));
     FoldPostOrder(loctestnum, loctesterr, lst, true, &FoldStringConcatenate, string("X"), string("XB A "));
@@ -342,7 +342,7 @@ void stestListString(uint& testnum, uint& testerr) {
   testerr += loctesterr;
 }
 
-void stestList(uint& testnum, uint& testerr) {
+void stestList(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   stestListInt(loctestnum, loctesterr);
   stestListDouble(loctestnum, loctesterr);
@@ -354,7 +354,7 @@ void stestList(uint& testnum, uint& testerr) {
 
 /* ************************************************************************** */
 
-void stestVectorListInt(uint& testnum, uint& testerr) {
+void stestVectorListInt(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of Vector/List<int> Test:" << endl;
   try {
@@ -389,7 +389,7 @@ void stestVectorListInt(uint& testnum, uint& testerr) {
   testerr += loctesterr;
 }
 
-void stestVectorListDouble(uint& testnum, uint& testerr) {
+void stestVectorListDouble(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of Vector/List<double> Test:" << endl;
   try {
@@ -424,7 +424,7 @@ void stestVectorListDouble(uint& testnum, uint& testerr) {
   testerr += loctesterr;
 }
 
-void stestVectorListString(uint& testnum, uint& testerr) {
+void stestVectorListString(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   cout << endl << "Begin of Vector/List<string> Test:" << endl;
   try {
@@ -483,7 +483,7 @@ void stestVectorListString(uint& testnum, uint& testerr) {
   testerr += loctesterr;
 }
 
-void stestVectorList(uint& testnum, uint& testerr) {
+void stestVectorList(uint & testnum, uint & testerr) {
   uint loctestnum = 0, loctesterr = 0;
   stestVectorListInt(loctestnum, loctesterr);
   stestVectorListDouble(loctestnum, loctesterr);
@@ -495,7 +495,7 @@ void stestVectorList(uint& testnum, uint& testerr) {
 
 /* ************************************************************************** */
 
-void testSimpleExercise1A(uint& testnum, uint& testerr) {
+void testSimpleExercise1A(uint & testnum, uint & testerr) {
   stestVector(testnum, testerr);
   stestList(testnum, testerr);
   stestVectorList(testnum, testerr);

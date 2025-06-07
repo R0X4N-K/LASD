@@ -9,7 +9,7 @@
 // DictionaryContainer member functions!
 
 template <typename Data>
-void InsertC(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, const Data& val) {
+void InsertC(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, const Data & val) {
   testnum++;
   bool tst = true;
   try {
@@ -17,15 +17,15 @@ void InsertC(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con,
     con.Insert(val);
     std::cout << "Correct!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void InsertM(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, Data&& val) {
+void InsertM(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, Data && val) {
   testnum++;
   bool tst = true;
   try {
@@ -33,15 +33,15 @@ void InsertM(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con,
     con.Insert(std::move(val));
     std::cout << "Correct!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void Remove(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, const Data& val) {
+void Remove(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, const Data & val) {
   testnum++;
   bool tst = true;
   try {
@@ -49,15 +49,15 @@ void Remove(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, 
     con.Remove(val);
     std::cout << "Correct!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void InsertC(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, bool chk, const Data& val) {
+void InsertC(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, bool chk, const Data & val) {
   testnum++;
   bool tst;
   try {
@@ -65,15 +65,15 @@ void InsertC(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con,
     std::cout << "it " << ((tst = con.Insert(val)) ? "has" : "has not") << " been inserted: ";
     std::cout << ((tst = (tst == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void InsertM(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, bool chk, Data&& val) {
+void InsertM(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, bool chk, Data && val) {
   testnum++;
   bool tst;
   try {
@@ -82,15 +82,15 @@ void InsertM(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con,
     std::cout << ((tst = (tst == chk)) ? "Correct" : "Error") << "!" << std::endl;
     std::cout << "Correct!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void Remove(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, bool chk, const Data& val) {
+void Remove(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, bool chk, const Data & val) {
   testnum++;
   bool tst;
   try {
@@ -98,15 +98,15 @@ void Remove(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, 
     std::cout << "it " << ((tst = con.Remove(val)) ? "has" : "has not") << " been removed: ";
     std::cout << ((tst = (tst == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void InsertC(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, const lasd::TraversableContainer<Data>& mc) {
+void InsertC(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, const lasd::TraversableContainer<Data> & mc) {
   testnum++;
   bool tst = true;
   try {
@@ -114,15 +114,15 @@ void InsertC(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con,
     con.InsertAll(mc);
     std::cout << "Correct!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void InsertM(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, lasd::MappableContainer<Data>&& mc) {
+void InsertM(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, lasd::MappableContainer<Data> && mc) {
   testnum++;
   bool tst = true;
   try {
@@ -130,15 +130,15 @@ void InsertM(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con,
     con.InsertAll(std::move(mc));
     std::cout << "Correct!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void Remove(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, const lasd::TraversableContainer<Data>& mc) {
+void Remove(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, const lasd::TraversableContainer<Data> & mc) {
   testnum++;
   bool tst = true;
   try {
@@ -146,15 +146,15 @@ void Remove(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, 
     con.RemoveAll(mc);
     std::cout << "Correct!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void InsertAllC(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, bool chk, const lasd::TraversableContainer<Data>& mc) {
+void InsertAllC(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, bool chk, const lasd::TraversableContainer<Data> & mc) {
   testnum++;
   bool tst = true;
   try {
@@ -162,15 +162,15 @@ void InsertAllC(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& c
     std::cout << ((tst = con.InsertAll(mc)) ? "all" : "not all") << " values have been inserted: ";
     std::cout << ((tst = (tst == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void InsertAllM(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, bool chk, lasd::MappableContainer<Data>&& mc) {
+void InsertAllM(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, bool chk, lasd::MappableContainer<Data> && mc) {
   testnum++;
   bool tst = true;
   try {
@@ -178,15 +178,15 @@ void InsertAllM(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& c
     std::cout << ((tst = con.InsertAll(std::move(mc))) ? "all" : "not all") << " values have been inserted: ";
     std::cout << ((tst = (tst == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void RemoveAll(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, bool chk, const lasd::TraversableContainer<Data>& mc) {
+void RemoveAll(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, bool chk, const lasd::TraversableContainer<Data> & mc) {
   testnum++;
   bool tst = true;
   try {
@@ -194,15 +194,15 @@ void RemoveAll(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& co
     std::cout << ((tst = con.RemoveAll(mc)) ? "all" : "not all") << " values have been removed: ";
     std::cout << ((tst = (tst == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void InsertSomeC(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, bool chk, const lasd::TraversableContainer<Data>& mc) {
+void InsertSomeC(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, bool chk, const lasd::TraversableContainer<Data> & mc) {
   testnum++;
   bool tst = true;
   try {
@@ -210,15 +210,15 @@ void InsertSomeC(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& 
     std::cout << ((tst = con.InsertSome(mc)) ? "some value" : "none of the values") << " has been inserted: ";
     std::cout << ((tst = (tst == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void InsertSomeM(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, bool chk, lasd::MappableContainer<Data>&& mc) {
+void InsertSomeM(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, bool chk, lasd::MappableContainer<Data> && mc) {
   testnum++;
   bool tst = true;
   try {
@@ -226,15 +226,15 @@ void InsertSomeM(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& 
     std::cout << ((tst = con.InsertSome(std::move(mc))) ? "some value" : "none of the values") << " has been inserted: ";
     std::cout << ((tst = (tst == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void RemoveSome(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, bool chk, const lasd::TraversableContainer<Data>& mc) {
+void RemoveSome(uint & testnum, uint & testerr, lasd::DictionaryContainer<Data> & con, bool chk, const lasd::TraversableContainer<Data> & mc) {
   testnum++;
   bool tst = true;
   try {
@@ -242,11 +242,11 @@ void RemoveSome(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& c
     std::cout << ((tst = con.RemoveSome(mc)) ? "some value" : "none of the values") << " has been removed: ";
     std::cout << ((tst = (tst == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 /* ************************************************************************** */
@@ -254,25 +254,25 @@ void RemoveSome(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& c
 // OrderedDictionaryContainer member functions!
 
 template <typename Data>
-void Min(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk, const Data& val) {
+void Min(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk, const Data & val) {
   bool tst;
   testnum++;
   try {
     std::cout << " " << testnum << " (" << testerr << ") Min of the ordered dictionary container with value \"" << con.Min() << "\": ";
     std::cout << ((tst = ((con.Min() == val) == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void RemoveMin(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk) {
+void RemoveMin(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk) {
   bool tst;
   testnum++;
   try {
@@ -280,54 +280,54 @@ void RemoveMin(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Da
     con.RemoveMin();
     std::cout << ((tst = chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void MinNRemove(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk, const Data& val) {
+void MinNRemove(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk, const Data & val) {
   bool tst;
   testnum++;
   try {
     std::cout << " " << testnum << " (" << testerr << ") MinNRemove from the ordered dictionary container with value \"" << con.Min() << "\": ";
     std::cout << ((tst = ((con.MinNRemove() == val) == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void Max(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk, const Data& val) {
+void Max(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk, const Data & val) {
   bool tst;
   testnum++;
   try {
     std::cout << " " << testnum << " (" << testerr << ") Max of the ordered dictionary container with value \"" << con.Max() << "\": ";
     std::cout << ((tst = ((con.Max() == val) == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void RemoveMax(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk) {
+void RemoveMax(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk) {
   bool tst;
   testnum++;
   try {
@@ -335,54 +335,54 @@ void RemoveMax(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Da
     con.RemoveMax();
     std::cout << ((tst = chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void MaxNRemove(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk, const Data& val) {
+void MaxNRemove(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk, const Data & val) {
   bool tst;
   testnum++;
   try {
     std::cout << " " << testnum << " (" << testerr << ") MaxNRemove from the ordered dictionary container with value \"" << con.Max() << "\": ";
     std::cout << ((tst = ((con.MaxNRemove() == val) == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void Predecessor(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk, const Data& prd, const Data& val) {
+void Predecessor(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk, const Data & prd, const Data & val) {
   bool tst;
   testnum++;
   try {
     std::cout << " " << testnum << " (" << testerr << ") Predecessor of " << prd << " with value \"" << con.Predecessor(prd) << "\": ";
     std::cout << ((tst = ((con.Predecessor(prd) == val) == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void RemovePredecessor(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk, const Data& prd) {
+void RemovePredecessor(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk, const Data & prd) {
   bool tst;
   testnum++;
   try {
@@ -390,54 +390,54 @@ void RemovePredecessor(uint& testnum, uint& testerr, lasd::OrderedDictionaryCont
     con.RemovePredecessor(prd);
     std::cout << ((tst = chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void PredecessorNRemove(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk, const Data& prd, const Data& val) {
+void PredecessorNRemove(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk, const Data & prd, const Data & val) {
   bool tst;
   testnum++;
   try {
     std::cout << " " << testnum << " (" << testerr << ") Remove predecessor of " << prd << " from the the ordered dictionary container: \"" << con.Predecessor(prd) << "\": ";
     std::cout << ((tst = ((con.PredecessorNRemove(prd) == val) == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void Successor(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk, const Data& prd, const Data& val) {
+void Successor(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk, const Data & prd, const Data & val) {
   bool tst;
   testnum++;
   try {
     std::cout << " " << testnum << " (" << testerr << ") Successor of " << prd << " with value \"" << con.Successor(prd) << "\": ";
     std::cout << ((tst = ((con.Successor(prd) == val) == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void RemoveSuccessor(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk, const Data& prd) {
+void RemoveSuccessor(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk, const Data & prd) {
   bool tst;
   testnum++;
   try {
@@ -445,32 +445,32 @@ void RemoveSuccessor(uint& testnum, uint& testerr, lasd::OrderedDictionaryContai
     con.RemoveSuccessor(prd);
     std::cout << ((tst = chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 template <typename Data>
-void SuccessorNRemove(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, bool chk, const Data& prd, const Data& val) {
+void SuccessorNRemove(uint & testnum, uint & testerr, lasd::OrderedDictionaryContainer<Data> & con, bool chk, const Data & prd, const Data & val) {
   bool tst;
   testnum++;
   try {
     std::cout << " " << testnum << " (" << testerr << ") Remove successor of " << prd << " from the the ordered dictionary container: \"" << con.Successor(prd) << "\": ";
     std::cout << ((tst = ((con.SuccessorNRemove(prd) == val) == chk)) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::length_error& exc) {
+  catch (std::length_error & exc) {
     std::cout << "\"" << exc.what() << "\": " << ((tst = !chk) ? "Correct" : "Error") << "!" << std::endl;
   }
-  catch (std::exception& exc) {
+  catch (std::exception & exc) {
     tst = false;
     std::cout << std::endl << "Wrong exception: " << exc.what() << "!" << std::endl;
   }
-  testerr += (1 - (uint)tst);
+  testerr += (1 - (uint) tst);
 }
 
 /* ************************************************************************** */
