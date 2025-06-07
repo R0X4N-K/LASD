@@ -4,6 +4,14 @@ cflags = -Wall -pedantic -Wno-sequence-point -O3 -std=c++20 -fsanitize=address
 
 objects = main.o test.o mytest.o container.o exc1as.o exc1af.o exc1bs.o exc1bf.o exc2as.o exc2af.o exc2bs.o exc2bf.o
 
+zmylib_container = zmytest/container/container.hpp zmytest/container/testable.hpp zmytest/container/traversable.hpp \
+                  zmytest/container/mappable.hpp zmytest/container/dictionary.hpp zmytest/container/linear.hpp
+zmylib_list = zmytest/list/list.hpp
+zmylib_set = zmytest/set/set.hpp
+zmylib_vector = zmytest/vector/vector.hpp
+
+zmylib = $(zmylib_container) $(zmylib_list) $(zmylib_set) $(zmylib_vector)
+
 libcon = container/container.hpp container/testable.hpp container/traversable.hpp container/traversable.cpp container/mappable.hpp container/mappable.cpp container/dictionary.hpp container/dictionary.cpp container/linear.hpp container/linear.cpp
 
 libexc = $(libcon) zlasdtest/container/container.hpp zlasdtest/container/testable.hpp zlasdtest/container/traversable.hpp zlasdtest/container/mappable.hpp zlasdtest/container/dictionary.hpp zlasdtest/container/linear.hpp
@@ -28,7 +36,7 @@ main.o: main.cpp
 test.o: zlasdtest/test.cpp zlasdtest/test.hpp
 	$(cc) $(cflags) -c zlasdtest/test.cpp -o test.o
 
-mytest.o: zmytest/test.cpp zmytest/test.hpp
+mytest.o: zmytest/test.cpp zmytest/test.hpp $(zmylib)
 	$(cc) $(cflags) -c zmytest/test.cpp -o mytest.o
 
 container.o: $(libcon) zlasdtest/container/container.cpp zlasdtest/container/container.hpp
