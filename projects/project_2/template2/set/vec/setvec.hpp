@@ -1,4 +1,3 @@
-
 #ifndef SETVEC_HPP
 #define SETVEC_HPP
 
@@ -11,117 +10,141 @@
 
 namespace lasd {
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-template <typename Data>
-class SetVec {
-  // Must extend Set<Data>,
-  // Could extend ResizableContainer
+  template <typename Data>
+  class SetVec : virtual public Set<Data>,
+    virtual protected Vector<Data> {
+    // Must extend Set<Data>,
+    //             Vector<Data>
+    // Implementation of a set using a vector as underlying container
+    // Elements are maintained in sorted order for efficient operations
 
-private:
+  private:
 
-  // ...
+    // ...
 
-protected:
+  protected:
 
-  // using Container::???;
+    using Vector<Data>::elements;  // Access to the array of elements from Vector
+    using Container::size;  // Access to size member from Container
 
-  // ...
+    // ...
 
-public:
+  public:
 
-  // Default constructor
-  // SetVec() specifiers;
+    // Default constructor
+    SetVec() = default;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Specific constructors
-  // SetVec(argument) specifiers; // A set obtained from a TraversableContainer
-  // SetVec(argument) specifiers; // A set obtained from a MappableContainer
+    // Specific constructors
+    SetVec(const TraversableContainer<Data>&);  // A set obtained from a TraversableContainer
+    SetVec(MappableContainer<Data>&&) noexcept;  // A set obtained from a MappableContainer
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Copy constructor
-  // SetVec(argument) specifiers;
+    // Copy constructor
+    SetVec(const SetVec&);
 
-  // Move constructor
-  // SetVec(argument) specifiers;
+    // Move constructor
+    SetVec(SetVec&&) noexcept;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Destructor
-  // ~SetVec() specifiers;
+    // Destructor
+    virtual ~SetVec() = default;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Copy assignment
-  // type operator=(argument) specifiers;
+    // Copy assignment
+    SetVec& operator=(const SetVec&);
 
-  // Move assignment
-  // type operator=(argument) specifiers;
+    // Move assignment
+    SetVec& operator=(SetVec&&) noexcept;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Comparison operators
-  // type operator==(argument) specifiers;
-  // type operator!=(argument) specifiers;
+    // Comparison operators
+    bool operator==(const SetVec&) const noexcept;
+    bool operator!=(const SetVec&) const noexcept;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Specific member functions (inherited from OrderedDictionaryContainer)
+    // Specific member functions (inherited from OrderedDictionaryContainer)
 
-  // type Min(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
-  // type MinNRemove(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
-  // type RemoveMin(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
+    const Data& Min() const override;  // Return the smallest element in the set
+    Data MinNRemove() override;  // Remove and return the smallest element
+    void RemoveMin() override;  // Remove the smallest element
 
-  // type Max(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
-  // type MaxNRemove(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
-  // type RemoveMax(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when empty)
+    const Data& Max() const override;  // Return the largest element in the set
+    Data MaxNRemove() override;  // Remove and return the largest element
+    void RemoveMax() override;  // Remove the largest element
 
-  // type Predecessor(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
-  // type PredecessorNRemove(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
-  // type RemovePredecessor(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
+    const Data& Predecessor(const Data&) const override;  // Find the largest element smaller than the given value
+    Data PredecessorNRemove(const Data&) override;  // Remove and return the predecessor
+    void RemovePredecessor(const Data&) override;  // Remove the predecessor
 
-  // type Successor(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
-  // type SuccessorNRemove(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
-  // type RemoveSuccessor(argument) specifiers; // Override OrderedDictionaryContainer member (concrete function must throw std::length_error when not found)
+    const Data& Successor(const Data&) const override;  // Find the smallest element larger than the given value
+    Data SuccessorNRemove(const Data&) override;  // Remove and return the successor
+    void RemoveSuccessor(const Data&) override;  // Remove the successor
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Specific member functions (inherited from DictionaryContainer)
+    // Specific member functions (inherited from DictionaryContainer)
 
-  // type Insert(argument) specifiers; // Override DictionaryContainer member (copy of the value)
-  // type Insert(argument) specifiers; // Override DictionaryContainer member (move of the value)
-  // type Remove(argument) specifiers; // Override DictionaryContainer member
+    bool Insert(const Data&) override;  // Add an element if not already present (copy)
+    bool Insert(Data&&) override;  // Add an element if not already present (move)
+    bool Remove(const Data&) override;  // Remove an element if present
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Specific member functions (inherited from LinearContainer)
+    // Specific member functions (inherited from LinearContainer)
 
-  // type operator[](argument) specifiers; // Override LinearContainer member (must throw std::out_of_range when out of range)
+    using Vector<Data>::operator[];  // Access elements by index
+    using Vector<Data>::Front;  // Access first element
+    using Vector<Data>::Back;  // Access last element
+
+    /* ************************************************************************** */
+
+    // Specific member function (inherited from TestableContainer)
+
+    virtual bool Exists(const Data&) const noexcept override;  // Check if an element exists in the set
+
+    /* ************************************************************************ */
+
+    // Specific member function (inherited from ClearableContainer)
+
+    virtual inline void Clear() override;  // Remove all elements from the set
+
+  protected:
+
+    // Auxiliary functions
+
+    // Binary search function for finding an element or its insertion point
+    ulong BinarySearch(const Data&) const;  // Efficiently locate elements in sorted array
+
+    // Find the position of the predecessor to a given data value
+    long FindPredecessorPos(const Data&) const;  // Find index of predecessor element
+
+    // Find the position of the successor to a given data value
+    long FindSuccessorPos(const Data&) const;  // Find index of successor element
+
+    // Shifts elements right from a given position
+    void ShiftRight(ulong);  // Make room for insertion by moving elements
+
+    // Shifts elements left from a given position
+    void ShiftLeft(ulong);  // Close gap after removal by moving elements
+
+    // Sorts the vector to maintain order when needed
+    void Sort();  // Ensure elements remain in sorted order
+
+  };
 
   /* ************************************************************************** */
 
-  // Specific member function (inherited from TestableContainer)
-
-  // type Exists(argument) specifiers; // Override TestableContainer member
-
-  /* ************************************************************************ */
-
-  // Specific member function (inherited from ClearableContainer)
-
-  // type Clear() specifiers; // Override ClearableContainer member
-
-protected:
-
-  // Auxiliary functions, if necessary!
-
-};
-
-/* ************************************************************************** */
-
 }
 
-#include "setvec.cpp"
+#include "setvec.cpp"  // Include implementation file
 
 #endif
