@@ -7,60 +7,58 @@
 
 /* ************************************************************************** */
 
-namespace lasd {
+namespace lasd
+{
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-template <typename Data>
-class Heap : virtual public SortableLinearContainer<Data>,
-             virtual public ClearableContainer {
-  // Must extend SortableLinearContainer<Data>,
-  //             ClearableContainer
+  template <typename Data>
+  class Heap : virtual public SortableLinearContainer<Data>,
+               virtual public ClearableContainer
+  {
+    // Must extend SortableLinearContainer<Data>,
+    //             ClearableContainer
 
-private:
+  private:
+    // ...
 
-  // ...
+  protected:
+    // ...
 
-protected:
+  public:
+    // Destructor
+    virtual ~Heap() = default;
 
-  // ...
+    /* ************************************************************************ */
 
-public:
+    // Copy assignment
+    // type operator=(argument); // Copy assignment of abstract types is not possible.
+    Heap &operator=(const Heap &) = delete;
 
-  // Destructor
-  virtual ~Heap() = default;
+    // Move assignment
+    // type operator=(argument); // Move assignment of abstract types is not possible.
+    Heap &operator=(Heap &&) noexcept = delete;
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types is not possible.
-  Heap& operator=(const Heap&) = delete;
+    // Comparison operators
+    // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
+    // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
+    bool operator==(const Heap &) const noexcept = delete;
+    bool operator!=(const Heap &) const noexcept = delete;
 
-  // Move assignment
-  // type operator=(argument); // Move assignment of abstract types is not possible.
-  Heap& operator=(Heap&&) noexcept = delete;
+    /* ************************************************************************ */
 
-  /* ************************************************************************ */
+    // Specific member functions
 
-  // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
-  bool operator==(const Heap&) const noexcept = delete;
-  bool operator!=(const Heap&) const noexcept = delete;
+    // type IsHeap(argument) specifiers;
+    virtual bool IsHeap() const noexcept = 0;
 
-  /* ************************************************************************ */
+    // type Heapify(argument) specifiers;
+    virtual void Heapify() = 0;
+  };
 
-  // Specific member functions
-
-  // type IsHeap(argument) specifiers;
-  virtual bool IsHeap() const noexcept = 0;
-
-  // type Heapify(argument) specifiers;
-  virtual void Heapify() = 0;
-
-};
-
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
 }
 

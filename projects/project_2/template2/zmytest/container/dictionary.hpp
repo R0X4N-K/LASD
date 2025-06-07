@@ -11,19 +11,20 @@
 
 // Test operation sequence and consistency
 template <typename Data>
-void InsertRemoveConsistency(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, const Data& val) {
+void InsertRemoveConsistency(uint &testnum, uint &testerr, lasd::DictionaryContainer<Data> &con, const Data &val)
+{
   bool tst1, tst2, tst3, tst4;
-  
+
   // Insert the value
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") Insert-Exists consistency: Value \"" << val << "\" ";
   tst1 = con.Insert(val);
   tst2 = con.Exists(val);
-  std::cout << (tst1 ? "was inserted" : "was not inserted") << " and " 
+  std::cout << (tst1 ? "was inserted" : "was not inserted") << " and "
             << (tst2 ? "exists" : "does not exist") << ": ";
   std::cout << ((tst1 && tst2) ? "Correct" : "Error") << "!" << std::endl;
   testerr += (!(tst1 && tst2));
-  
+
   // Try inserting again (should fail for sets)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") Insert duplicate consistency: Value \"" << val << "\" ";
@@ -31,17 +32,17 @@ void InsertRemoveConsistency(uint& testnum, uint& testerr, lasd::DictionaryConta
   std::cout << (tst3 ? "was correctly rejected" : "was incorrectly inserted again") << ": ";
   std::cout << (tst3 ? "Correct" : "Error") << "!" << std::endl;
   testerr += (!tst3);
-  
+
   // Remove the value
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") Remove-Exists consistency: Value \"" << val << "\" ";
   tst1 = con.Remove(val);
   tst2 = !con.Exists(val);
-  std::cout << (tst1 ? "was removed" : "was not removed") << " and " 
+  std::cout << (tst1 ? "was removed" : "was not removed") << " and "
             << (tst2 ? "no longer exists" : "still exists") << ": ";
   std::cout << ((tst1 && tst2) ? "Correct" : "Error") << "!" << std::endl;
   testerr += (!(tst1 && tst2));
-  
+
   // Try removing again (should fail)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") Remove non-existent consistency: Value \"" << val << "\" ";
@@ -53,10 +54,11 @@ void InsertRemoveConsistency(uint& testnum, uint& testerr, lasd::DictionaryConta
 
 // Test InsertAll and RemoveAll on empty source
 template <typename Data>
-void EmptySourceOperations(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con) {
+void EmptySourceOperations(uint &testnum, uint &testerr, lasd::DictionaryContainer<Data> &con)
+{
   lasd::List<Data> emptyList;
   bool tst1, tst2, tst3;
-  
+
   // Insert from empty list (should return true)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") InsertAll from empty source: ";
@@ -64,7 +66,7 @@ void EmptySourceOperations(uint& testnum, uint& testerr, lasd::DictionaryContain
   std::cout << (tst1 ? "returned true" : "returned false") << ": ";
   std::cout << (tst1 ? "Correct" : "Error") << "!" << std::endl;
   testerr += (!tst1);
-  
+
   // Remove from empty list (should return true)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") RemoveAll from empty source: ";
@@ -72,7 +74,7 @@ void EmptySourceOperations(uint& testnum, uint& testerr, lasd::DictionaryContain
   std::cout << (tst2 ? "returned true" : "returned false") << ": ";
   std::cout << (tst2 ? "Correct" : "Error") << "!" << std::endl;
   testerr += (!tst2);
-  
+
   // InsertSome from empty list (should return false)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") InsertSome from empty source: ";
@@ -84,9 +86,10 @@ void EmptySourceOperations(uint& testnum, uint& testerr, lasd::DictionaryContain
 
 // Test behavior when all elements are already present or none are present
 template <typename Data>
-void AllOrNonePresent(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, const lasd::Vector<Data>& present, const lasd::Vector<Data>& absent) {
+void AllOrNonePresent(uint &testnum, uint &testerr, lasd::DictionaryContainer<Data> &con, const lasd::Vector<Data> &present, const lasd::Vector<Data> &absent)
+{
   bool tst1, tst2, tst3, tst4;
-  
+
   // InsertAll on already present elements (should return false for sets)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") InsertAll when all elements already exist: ";
@@ -94,7 +97,7 @@ void AllOrNonePresent(uint& testnum, uint& testerr, lasd::DictionaryContainer<Da
   std::cout << (!tst1 ? "correctly returned false" : "incorrectly returned true") << ": ";
   std::cout << (tst1 ? "Correct" : "Error") << "!" << std::endl;
   testerr += (!tst1);
-  
+
   // RemoveAll on already present elements (should return true)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") RemoveAll when all elements exist: ";
@@ -102,7 +105,7 @@ void AllOrNonePresent(uint& testnum, uint& testerr, lasd::DictionaryContainer<Da
   std::cout << (tst2 ? "correctly returned true" : "incorrectly returned false") << ": ";
   std::cout << (tst2 ? "Correct" : "Error") << "!" << std::endl;
   testerr += (!tst2);
-  
+
   // RemoveAll on absent elements (should return false)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") RemoveAll when no elements exist: ";
@@ -110,7 +113,7 @@ void AllOrNonePresent(uint& testnum, uint& testerr, lasd::DictionaryContainer<Da
   std::cout << (!tst3 ? "correctly returned false" : "incorrectly returned true") << ": ";
   std::cout << (tst3 ? "Correct" : "Error") << "!" << std::endl;
   testerr += (!tst3);
-  
+
   // InsertAll on absent elements (should return true)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") InsertAll when no elements exist: ";
@@ -122,15 +125,16 @@ void AllOrNonePresent(uint& testnum, uint& testerr, lasd::DictionaryContainer<Da
 
 // Mixed operation sequence for InsertSome and RemoveSome
 template <typename Data>
-void MixedOperations(uint& testnum, uint& testerr, lasd::DictionaryContainer<Data>& con, const lasd::Vector<Data>& mixed) {
+void MixedOperations(uint &testnum, uint &testerr, lasd::DictionaryContainer<Data> &con, const lasd::Vector<Data> &mixed)
+{
   bool tst1, tst2, tst3;
-  
+
   // Test initial state
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") Initial state before mixed operations: ";
   bool initialExists = con.Exists(mixed[0]);
   std::cout << (initialExists ? "first element exists" : "first element does not exist") << std::endl;
-  
+
   // InsertSome with mixed content (should return true if at least one element wasn't in container)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") InsertSome with mixed content: ";
@@ -138,18 +142,19 @@ void MixedOperations(uint& testnum, uint& testerr, lasd::DictionaryContainer<Dat
   std::cout << (tst1 ? "correctly returned true" : "incorrectly returned false") << ": ";
   std::cout << (tst1 ? "Correct" : "Error") << "!" << std::endl;
   testerr += (!tst1);
-  
+
   // Verify at least one element exists now
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") Verify content after InsertSome: ";
   bool anyExists = false;
-  for (ulong i = 0; i < mixed.Size(); i++) {
+  for (ulong i = 0; i < mixed.Size(); i++)
+  {
     anyExists |= con.Exists(mixed[i]);
   }
   std::cout << (anyExists ? "at least one element exists" : "no elements exist") << ": ";
   std::cout << (anyExists ? "Correct" : "Error") << "!" << std::endl;
   testerr += (!anyExists);
-  
+
   // RemoveSome with the same content (should return true if at least one element was in container)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") RemoveSome with mixed content: ";
@@ -157,7 +162,7 @@ void MixedOperations(uint& testnum, uint& testerr, lasd::DictionaryContainer<Dat
   std::cout << (tst2 ? "correctly returned true" : "incorrectly returned false") << ": ";
   std::cout << (tst2 ? "Correct" : "Error") << "!" << std::endl;
   testerr += (!tst2);
-  
+
   // Try RemoveSome again (should return false if all were already removed)
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") RemoveSome after already removing all elements: ";
@@ -173,16 +178,19 @@ void MixedOperations(uint& testnum, uint& testerr, lasd::DictionaryContainer<Dat
 
 // Test order consistency between Min, Max, Successor, and Predecessor
 template <typename Data>
-void OrderConsistency(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con) {
+void OrderConsistency(uint &testnum, uint &testerr, lasd::OrderedDictionaryContainer<Data> &con)
+{
   bool tst1 = true, tst2 = true;
-  
-  if (con.Empty()) {
+
+  if (con.Empty())
+  {
     testnum++;
     std::cout << " " << testnum << " (" << testerr << ") Order consistency test skipped - container is empty" << std::endl;
     return;
   }
-  
-  try {
+
+  try
+  {
     // Test if Min() <= Max()
     testnum++;
     std::cout << " " << testnum << " (" << testerr << ") Min <= Max order consistency: ";
@@ -192,24 +200,26 @@ void OrderConsistency(uint& testnum, uint& testerr, lasd::OrderedDictionaryConta
     std::cout << "Min = " << min << ", Max = " << max << ": ";
     std::cout << (tst1 ? "Correct" : "Error") << "!" << std::endl;
     testerr += (!tst1);
-    
+
     // If container has at least two elements, test Successor/Predecessor relationship
-    if (min != max) {
+    if (min != max)
+    {
       testnum++;
       std::cout << " " << testnum << " (" << testerr << ") Successor/Predecessor relationship: ";
       Data succ = con.Successor(min);
       Data pred = con.Predecessor(max);
-      
+
       bool succTest = (min < succ) && (succ <= max);
       bool predTest = (min <= pred) && (pred < max);
-      
+
       tst2 = succTest && predTest;
       std::cout << "Successor(Min) = " << succ << ", Predecessor(Max) = " << pred << ": ";
       std::cout << (tst2 ? "Correct" : "Error") << "!" << std::endl;
       testerr += (!tst2);
     }
   }
-  catch (std::exception& e) {
+  catch (std::exception &e)
+  {
     std::cout << "Exception thrown: " << e.what() << std::endl;
     testerr += 1;
   }
@@ -217,75 +227,85 @@ void OrderConsistency(uint& testnum, uint& testerr, lasd::OrderedDictionaryConta
 
 // Test MinNRemove operation sequence
 template <typename Data>
-void MinMaxRemovalSequence(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, uint numOps) {
-  if (con.Empty()) {
+void MinMaxRemovalSequence(uint &testnum, uint &testerr, lasd::OrderedDictionaryContainer<Data> &con, uint numOps)
+{
+  if (con.Empty())
+  {
     testnum++;
     std::cout << " " << testnum << " (" << testerr << ") MinMax removal sequence test skipped - container is empty" << std::endl;
     return;
   }
-  
+
   // Save initial size
   ulong initialSize = con.Size();
   ulong expectedSize = initialSize;
   ulong actualOps = (numOps < initialSize) ? numOps : initialSize;
-  
+
   // Test alternating MinNRemove and MaxNRemove
   bool testPassed = true;
   Data lastMin, lastMax;
-  
-  for (uint i = 0; i < actualOps; i++) {
-    try {
-      if (i % 2 == 0 && expectedSize > 0) {
+
+  for (uint i = 0; i < actualOps; i++)
+  {
+    try
+    {
+      if (i % 2 == 0 && expectedSize > 0)
+      {
         // MinNRemove
         testnum++;
         Data currentMin = con.Min();
         Data removedMin = con.MinNRemove();
         expectedSize--;
-        
-        std::cout << " " << testnum << " (" << testerr << ") MinNRemove consistency [" << i+1 << "/" << actualOps << "]: ";
+
+        std::cout << " " << testnum << " (" << testerr << ") MinNRemove consistency [" << i + 1 << "/" << actualOps << "]: ";
         bool minTest = (currentMin == removedMin) && (con.Size() == expectedSize);
-        
+
         // Check that new Min > previous Min
-        if (i > 0 && !con.Empty()) {
+        if (i > 0 && !con.Empty())
+        {
           minTest &= (con.Min() > lastMin);
         }
-        
+
         std::cout << "Removed " << removedMin << ", Size = " << con.Size() << ": ";
         std::cout << (minTest ? "Correct" : "Error") << "!" << std::endl;
         testPassed &= minTest;
         testerr += (!minTest);
-        
+
         lastMin = removedMin;
-      } else if (expectedSize > 0) {
+      }
+      else if (expectedSize > 0)
+      {
         // MaxNRemove
         testnum++;
         Data currentMax = con.Max();
         Data removedMax = con.MaxNRemove();
         expectedSize--;
-        
-        std::cout << " " << testnum << " (" << testerr << ") MaxNRemove consistency [" << i+1 << "/" << actualOps << "]: ";
+
+        std::cout << " " << testnum << " (" << testerr << ") MaxNRemove consistency [" << i + 1 << "/" << actualOps << "]: ";
         bool maxTest = (currentMax == removedMax) && (con.Size() == expectedSize);
-        
+
         // Check that new Max < previous Max
-        if (i > 0 && !con.Empty()) {
+        if (i > 0 && !con.Empty())
+        {
           maxTest &= (con.Max() < lastMax);
         }
-        
+
         std::cout << "Removed " << removedMax << ", Size = " << con.Size() << ": ";
         std::cout << (maxTest ? "Correct" : "Error") << "!" << std::endl;
         testPassed &= maxTest;
         testerr += (!maxTest);
-        
+
         lastMax = removedMax;
       }
     }
-    catch (std::exception& e) {
+    catch (std::exception &e)
+    {
       std::cout << "Exception thrown: " << e.what() << std::endl;
       testPassed = false;
       testerr += 1;
     }
   }
-  
+
   // Final check
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") Final size after MinMax removal sequence: ";
@@ -297,15 +317,18 @@ void MinMaxRemovalSequence(uint& testnum, uint& testerr, lasd::OrderedDictionary
 
 // Test Successor and Predecessor operations on edge values
 template <typename Data>
-void SuccessorPredecessorEdgeCases(uint& testnum, uint& testerr, lasd::OrderedDictionaryContainer<Data>& con, const Data& beyondMin, const Data& beyondMax) {
-  if (con.Empty()) {
+void SuccessorPredecessorEdgeCases(uint &testnum, uint &testerr, lasd::OrderedDictionaryContainer<Data> &con, const Data &beyondMin, const Data &beyondMax)
+{
+  if (con.Empty())
+  {
     testnum++;
     std::cout << " " << testnum << " (" << testerr << ") Successor/Predecessor edge cases test skipped - container is empty" << std::endl;
     return;
   }
-  
+
   // Test cases for edge values
-  try {
+  try
+  {
     // Test Successor on value less than Min
     testnum++;
     std::cout << " " << testnum << " (" << testerr << ") Successor of value below minimum: ";
@@ -316,12 +339,14 @@ void SuccessorPredecessorEdgeCases(uint& testnum, uint& testerr, lasd::OrderedDi
     std::cout << (succTest ? "Correct" : "Error") << "!" << std::endl;
     testerr += (!succTest);
   }
-  catch (std::exception& e) {
+  catch (std::exception &e)
+  {
     std::cout << "Exception thrown: " << e.what() << " - expected Min" << std::endl;
     testerr += 1;
   }
-  
-  try {
+
+  try
+  {
     // Test Predecessor on value greater than Max
     testnum++;
     std::cout << " " << testnum << " (" << testerr << ") Predecessor of value above maximum: ";
@@ -332,42 +357,49 @@ void SuccessorPredecessorEdgeCases(uint& testnum, uint& testerr, lasd::OrderedDi
     std::cout << (predTest ? "Correct" : "Error") << "!" << std::endl;
     testerr += (!predTest);
   }
-  catch (std::exception& e) {
+  catch (std::exception &e)
+  {
     std::cout << "Exception thrown: " << e.what() << " - expected Max" << std::endl;
     testerr += 1;
   }
-  
+
   // Test expected exceptions
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") Predecessor of minimum value - exception expected: ";
   bool exceptionThrown = false;
-  try {
+  try
+  {
     Data min = con.Min();
     Data pred = con.Predecessor(min);
     std::cout << "No exception thrown, returned " << pred << ": Error!" << std::endl;
     testerr += 1;
   }
-  catch (std::length_error& e) {
+  catch (std::length_error &e)
+  {
     std::cout << "Exception thrown as expected: Correct!" << std::endl;
   }
-  catch (std::exception& e) {
+  catch (std::exception &e)
+  {
     std::cout << "Wrong exception type thrown: " << e.what() << ": Error!" << std::endl;
     testerr += 1;
   }
-  
+
   testnum++;
   std::cout << " " << testnum << " (" << testerr << ") Successor of maximum value - exception expected: ";
   exceptionThrown = false;
-  try {
+  try
+  {
     Data max = con.Max();
     Data succ = con.Successor(max);
     std::cout << "No exception thrown, returned " << succ << ": Error!" << std::endl;
     testerr += 1;
   }
-  catch (std::length_error& e) {
+  catch (std::length_error &e)
+  {
     std::cout << "Exception thrown as expected: Correct!" << std::endl;
   }
-  catch (std::exception& e) {
+  catch (std::exception &e)
+  {
     std::cout << "Wrong exception type thrown: " << e.what() << ": Error!" << std::endl;
     testerr += 1;
   }

@@ -7,7 +7,8 @@
 /* ************************************************************************** */
 
 // Container member functions implementations
-void ClearEffect(uint& testnum, uint& testerr, lasd::ClearableContainer& con, const std::string& message) {
+void ClearEffect(uint &testnum, uint &testerr, lasd::ClearableContainer &con, const std::string &message)
+{
   bool tst;
   ulong oldSize = con.Size();
   con.Clear();
@@ -15,20 +16,47 @@ void ClearEffect(uint& testnum, uint& testerr, lasd::ClearableContainer& con, co
   std::cout << " " << testnum << " (" << testerr << ") " << message << ": ";
   std::cout << ((tst = (con.Empty() && con.Size() == 0)) ? "Correct" : "Error") << "!" << std::endl;
   testerr += (1 - (uint)tst);
-  
-  if (tst) {
+
+  if (tst)
+  {
     testnum++;
     std::cout << " " << testnum << " (" << testerr << ") Size changed from " << oldSize << " to 0 after Clear(): ";
     std::cout << "Correct!" << std::endl;
-  } else {
+  }
+  else
+  {
     testnum++;
     std::cout << " " << testnum << " (" << testerr << ") Size changed from " << oldSize << " to 0 after Clear(): ";
     std::cout << "Error!" << std::endl;
     testerr++;
   }
 }
+void SizeTransition(uint &testnum, uint &testerr, lasd::Container &con, ulong oldSize, ulong newSize, const std::string &operation)
+{
+  bool tst;
+  testnum++;
+  std::cout << " " << testnum << " (" << testerr << ") Size transition from " << oldSize << " to " << newSize << " after " << operation << ": ";
+  std::cout << ((tst = (con.Size() == newSize)) ? "Correct" : "Error") << "!" << std::endl;
+  testerr += (1 - (uint)tst);
 
-void ResizeEffect(uint& testnum, uint& testerr, lasd::ResizableContainer& con, ulong newSize, const std::string& message) {
+  if (newSize == 0)
+  {
+    testnum++;
+    std::cout << " " << testnum << " (" << testerr << ") Container empty consistency after " << operation << ": ";
+    std::cout << ((tst = con.Empty()) ? "Correct" : "Error") << "!" << std::endl;
+    testerr += (1 - (uint)tst);
+  }
+  else
+  {
+    testnum++;
+    std::cout << " " << testnum << " (" << testerr << ") Container not empty consistency after " << operation << ": ";
+    std::cout << ((tst = !con.Empty()) ? "Correct" : "Error") << "!" << std::endl;
+    testerr += (1 - (uint)tst);
+  }
+}
+
+void ResizeEffect(uint &testnum, uint &testerr, lasd::ResizableContainer &con, ulong newSize, const std::string &message)
+{
   bool tst;
   ulong oldSize = con.Size();
   con.Resize(newSize);
@@ -36,15 +64,17 @@ void ResizeEffect(uint& testnum, uint& testerr, lasd::ResizableContainer& con, u
   std::cout << " " << testnum << " (" << testerr << ") " << message << ": ";
   std::cout << ((tst = (con.Size() == newSize)) ? "Correct" : "Error") << "!" << std::endl;
   testerr += (1 - (uint)tst);
-  
-  if (newSize == 0) {
+
+  if (newSize == 0)
+  {
     testnum++;
     std::cout << " " << testnum << " (" << testerr << ") Container is empty after Resize(0): ";
     std::cout << ((tst = con.Empty()) ? "Correct" : "Error") << "!" << std::endl;
     testerr += (1 - (uint)tst);
   }
 
-  if (oldSize != newSize) {
+  if (oldSize != newSize)
+  {
     SizeTransition(testnum, testerr, con, oldSize, newSize, "Resize()");
   }
 }

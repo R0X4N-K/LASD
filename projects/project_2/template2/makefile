@@ -9,8 +9,10 @@ zmylib_container = zmytest/container/container.hpp zmytest/container/testable.hp
 zmylib_list = zmytest/list/list.hpp
 zmylib_set = zmytest/set/set.hpp
 zmylib_vector = zmytest/vector/vector.hpp
+zmylib_heap = zmytest/heap/heap.hpp
+zmylib_pq = zmytest/pq/pq.hpp
 
-zmylib = $(zmylib_container) $(zmylib_list) $(zmylib_set) $(zmylib_vector)
+zmylib = $(zmylib_container) $(zmylib_list) $(zmylib_set) $(zmylib_vector) $(zmylib_heap) $(zmylib_pq)
 
 libcon = container/container.hpp container/testable.hpp container/traversable.hpp container/traversable.cpp container/mappable.hpp container/mappable.cpp container/dictionary.hpp container/dictionary.cpp container/linear.hpp container/linear.cpp
 
