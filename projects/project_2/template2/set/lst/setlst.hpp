@@ -19,8 +19,6 @@ namespace lasd
   {
     // Must extend Set<Data>,
     //             List<Data>
-    // Implementation of a set using a linked list as underlying container
-    // Elements are maintained in sorted order for efficient operations
 
   private:
     // ...

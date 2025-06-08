@@ -72,100 +72,96 @@ namespace lasd
   /* ************************************************************************** */
 
   // Specific member functions (inherited from LinearContainer)
-  // PQHeap implementa PQ che eredita da LinearContainer, quindi deve implementare questi metodi
 
   template <typename Data>
   const Data &PQHeap<Data>::operator[](const ulong index) const
   {
-    return HeapVec<Data>::operator[](index); // Delega a HeapVec
+    return HeapVec<Data>::operator[](index); // Delegates to HeapVec
   }
 
   template <typename Data>
   Data &PQHeap<Data>::operator[](const ulong index)
   {
-    return HeapVec<Data>::operator[](index); // Delega a HeapVec
+    return HeapVec<Data>::operator[](index); // Delegates to HeapVec
   }
 
   template <typename Data>
   const Data &PQHeap<Data>::Front() const
   {
-    return HeapVec<Data>::Front(); // Delega a HeapVec
+    return HeapVec<Data>::Front(); // Delegates to HeapVec
   }
 
   template <typename Data>
   Data &PQHeap<Data>::Front()
   {
-    return HeapVec<Data>::Front(); // Delega a HeapVec
+    return HeapVec<Data>::Front(); // Delegates to HeapVec
   }
 
   template <typename Data>
   const Data &PQHeap<Data>::Back() const
   {
-    return HeapVec<Data>::Back(); // Delega a HeapVec
+    return HeapVec<Data>::Back(); // Delegates to HeapVec
   }
 
   template <typename Data>
   Data &PQHeap<Data>::Back()
   {
-    return HeapVec<Data>::Back(); // Delega a HeapVec
+    return HeapVec<Data>::Back(); // Delegates to HeapVec
   }
 
   template <typename Data>
   bool PQHeap<Data>::Empty() const noexcept
   {
-    return HeapVec<Data>::Empty(); // Delega a HeapVec
+    return HeapVec<Data>::Empty(); // Delegates to HeapVec
   }
 
   template <typename Data>
   ulong PQHeap<Data>::Size() const noexcept
   {
-    return HeapVec<Data>::Size(); // Delega a HeapVec
+    return HeapVec<Data>::Size(); // Delegates to HeapVec
   }
 
   // Traversal and mapping functions (da TraversableContainer/MappableContainer)
   template <typename Data>
   void PQHeap<Data>::Traverse(typename TraversableContainer<Data>::TraverseFun fun) const
   {
-    HeapVec<Data>::Traverse(fun); // Delega a HeapVec
+    HeapVec<Data>::Traverse(fun); // Delegates to HeapVec
   }
 
   template <typename Data>
   void PQHeap<Data>::PreOrderTraverse(typename TraversableContainer<Data>::TraverseFun fun) const
   {
-    HeapVec<Data>::PreOrderTraverse(fun); // Delega a HeapVec
+    HeapVec<Data>::PreOrderTraverse(fun); // Delegates to HeapVec
   }
 
   template <typename Data>
   void PQHeap<Data>::PostOrderTraverse(typename TraversableContainer<Data>::TraverseFun fun) const
   {
-    HeapVec<Data>::PostOrderTraverse(fun); // Delega a HeapVec
+    HeapVec<Data>::PostOrderTraverse(fun); // Delegates to HeapVec
   }
 
   template <typename Data>
   void PQHeap<Data>::Map(typename MappableContainer<Data>::MapFun fun)
   {
-    HeapVec<Data>::Map(fun); // Delega a HeapVec
-    // HeapVec dovrebbe già gestire il ripristino della proprietà heap se necessario
+    HeapVec<Data>::Map(fun); // Delegates to HeapVec
   }
 
   template <typename Data>
   void PQHeap<Data>::PreOrderMap(typename MappableContainer<Data>::MapFun fun)
   {
-    HeapVec<Data>::PreOrderMap(fun); // Delega a HeapVec
-    // HeapVec dovrebbe già gestire il ripristino della proprietà heap se necessario
+    HeapVec<Data>::PreOrderMap(fun); // Delegates to HeapVec
   }
 
   template <typename Data>
   void PQHeap<Data>::PostOrderMap(typename MappableContainer<Data>::MapFun fun)
   {
-    HeapVec<Data>::PostOrderMap(fun); // Delega a HeapVec
-    // HeapVec dovrebbe già gestire il ripristino della proprietà heap se necessario
+    HeapVec<Data>::PostOrderMap(fun); // Delegates to HeapVec
   }
 
   template <typename Data>
   bool PQHeap<Data>::Exists(const Data &data) const noexcept
   {
-    return HeapVec<Data>::Exists(data); // Delega a HeapVec
+    return HeapVec<Data>::Exists(data); // Delegates to HeapVec
   }
 
   /* ************************************************************************** */
@@ -174,13 +170,12 @@ namespace lasd
   template <typename Data>
   void PQHeap<Data>::Clear()
   {
-    HeapVec<Data>::Clear(); // Delega a HeapVec
+    HeapVec<Data>::Clear(); // Delegates to HeapVec
   }
 
   /* ************************************************************************** */
 
   // Specific member functions (inherited from PQ)
-  // Questi sono i metodi specifici che PQ richiede
 
   // Tip function - returns the maximum element (root of max heap)
   template <typename Data>

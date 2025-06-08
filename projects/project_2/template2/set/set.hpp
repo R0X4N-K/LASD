@@ -22,9 +22,6 @@ namespace lasd
     // Must extend OrderedDictionaryContainer<Data>,
     //             LinearContainer<Data>,
     //             ClearableContainer
-    // Abstract base class for set data structures
-    // A set is a collection of unique elements stored in sorted order
-    // It combines functionality of ordered dictionaries, linear containers, and clearable containers
 
   private:
     // ...

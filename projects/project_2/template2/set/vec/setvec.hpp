@@ -19,8 +19,6 @@ namespace lasd
   {
     // Must extend Set<Data>,
     //             Vector<Data>
-    // Implementation of a set using a vector as underlying container
-    // Elements are maintained in sorted order for efficient operations
 
   private:
     // ...
