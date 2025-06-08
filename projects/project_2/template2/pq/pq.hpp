@@ -23,7 +23,6 @@ namespace lasd
   protected:
   public:
     // Destructor
-    // ~PQ() specifiers
     virtual ~PQ() = default;
 
     /* ************************************************************************ */

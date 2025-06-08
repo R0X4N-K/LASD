@@ -25,7 +25,7 @@ namespace lasd
 
   protected:
     using Container::size;
-    using Vector<Data>::elements; // Import elements from Vector
+    using Vector<Data>::elements;
 
     // ...
 
@@ -87,19 +87,12 @@ namespace lasd
 
     void Sort() override; // Override SortableLinearContainer member
 
-    /* ************************************************************************ */
-
-    // Additional specific member functions for heap operations
-
-    void Insert(const Data &); // Insert element and maintain heap property
-    void Insert(Data &&);      // Insert element with move semantics
-    void RemoveRoot();         // Remove root element and maintain heap property
-
   protected:
     // Auxiliary functions, if necessary!
 
-    void HeapifyDown(ulong); // Helper function for maintaining heap property downward
-    void HeapifyUp(ulong);   // Helper function for maintaining heap property upward
+    void HeapifyDown(ulong);        // Helper function for maintaining heap property downward
+    void HeapifyDown(ulong, ulong); // Helper function for maintaining heap property downward with custom size
+    void HeapifyUp(ulong);          // Helper function for maintaining heap property upward
 
     ulong LeftChild(ulong) const noexcept;  // Get left child index
     ulong RightChild(ulong) const noexcept; // Get right child index

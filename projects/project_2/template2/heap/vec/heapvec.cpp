@@ -128,59 +128,13 @@ namespace lasd
     Heapify();
 
     // Extract elements one by one from heap
-    for (ulong i = size; i > 1; --i)
+    for (ulong currentHeapSize = size; currentHeapSize > 1; --currentHeapSize)
     {
       // Move current root to end
-      std::swap(elements[0], elements[i - 1]);
+      std::swap(elements[0], elements[currentHeapSize - 1]);
 
-      // Temporarily reduce heap size and heapify down
-      ulong originalSize = size;
-      size = i - 1;
-      HeapifyDown(0);
-      size = originalSize;
-    }
-  }
-
-  /* ************************************************************************** */
-
-  // Additional specific member functions for heap operations
-
-  // Insert element and maintain heap property
-  template <typename Data>
-  void HeapVec<Data>::Insert(const Data &value)
-  {
-    Vector<Data>::Resize(size + 1);
-    elements[size - 1] = value;
-    HeapifyUp(size - 1);
-  }
-
-  // Insert element with move semantics
-  template <typename Data>
-  void HeapVec<Data>::Insert(Data &&value)
-  {
-    Vector<Data>::Resize(size + 1);
-    elements[size - 1] = std::move(value);
-    HeapifyUp(size - 1);
-  }
-
-  // Remove root element and maintain heap property
-  template <typename Data>
-  void HeapVec<Data>::RemoveRoot()
-  {
-    if (size == 0)
-    {
-      throw std::length_error("Heap is empty");
-    }
-
-    if (size == 1)
-    {
-      Vector<Data>::Resize(0);
-    }
-    else
-    {
-      elements[0] = std::move(elements[size - 1]);
-      Vector<Data>::Resize(size - 1);
-      HeapifyDown(0);
+      // Restore heap property using existing HeapifyDown function
+      HeapifyDown(0, currentHeapSize - 1);
     }
   }
 
@@ -192,17 +146,25 @@ namespace lasd
   template <typename Data>
   void HeapVec<Data>::HeapifyDown(ulong index)
   {
+    // Delegate to the version with explicit size parameter
+    HeapifyDown(index, size);
+  }
+
+  // Maintain heap property downward from given index with custom heap size
+  template <typename Data>
+  void HeapVec<Data>::HeapifyDown(ulong index, ulong heapSize)
+  {
     ulong largest = index;
     ulong left = LeftChild(index);
     ulong right = RightChild(index);
 
     // Find largest among index, left child and right child
-    if (left < size && elements[left] > elements[largest])
+    if (left < heapSize && elements[left] > elements[largest])
     {
       largest = left;
     }
 
-    if (right < size && elements[right] > elements[largest])
+    if (right < heapSize && elements[right] > elements[largest])
     {
       largest = right;
     }
@@ -211,7 +173,7 @@ namespace lasd
     if (largest != index)
     {
       std::swap(elements[index], elements[largest]);
-      HeapifyDown(largest);
+      HeapifyDown(largest, heapSize);
     }
   }
 

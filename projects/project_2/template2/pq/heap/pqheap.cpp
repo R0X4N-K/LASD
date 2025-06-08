@@ -76,92 +76,92 @@ namespace lasd
   template <typename Data>
   const Data &PQHeap<Data>::operator[](const ulong index) const
   {
-    return HeapVec<Data>::operator[](index); // Delegates to HeapVec
+    return HeapVec<Data>::operator[](index); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   Data &PQHeap<Data>::operator[](const ulong index)
   {
-    return HeapVec<Data>::operator[](index); // Delegates to HeapVec
+    return HeapVec<Data>::operator[](index); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   const Data &PQHeap<Data>::Front() const
   {
-    return HeapVec<Data>::Front(); // Delegates to HeapVec
+    return HeapVec<Data>::Front(); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   Data &PQHeap<Data>::Front()
   {
-    return HeapVec<Data>::Front(); // Delegates to HeapVec
+    return HeapVec<Data>::Front(); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   const Data &PQHeap<Data>::Back() const
   {
-    return HeapVec<Data>::Back(); // Delegates to HeapVec
+    return HeapVec<Data>::Back(); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   Data &PQHeap<Data>::Back()
   {
-    return HeapVec<Data>::Back(); // Delegates to HeapVec
+    return HeapVec<Data>::Back(); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   bool PQHeap<Data>::Empty() const noexcept
   {
-    return HeapVec<Data>::Empty(); // Delegates to HeapVec
+    return HeapVec<Data>::Empty(); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   ulong PQHeap<Data>::Size() const noexcept
   {
-    return HeapVec<Data>::Size(); // Delegates to HeapVec
+    return HeapVec<Data>::Size(); // Access HeapVec through inheritance
   }
 
   // Traversal and mapping functions (da TraversableContainer/MappableContainer)
   template <typename Data>
   void PQHeap<Data>::Traverse(typename TraversableContainer<Data>::TraverseFun fun) const
   {
-    HeapVec<Data>::Traverse(fun); // Delegates to HeapVec
+    HeapVec<Data>::Traverse(fun); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   void PQHeap<Data>::PreOrderTraverse(typename TraversableContainer<Data>::TraverseFun fun) const
   {
-    HeapVec<Data>::PreOrderTraverse(fun); // Delegates to HeapVec
+    HeapVec<Data>::PreOrderTraverse(fun); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   void PQHeap<Data>::PostOrderTraverse(typename TraversableContainer<Data>::TraverseFun fun) const
   {
-    HeapVec<Data>::PostOrderTraverse(fun); // Delegates to HeapVec
+    HeapVec<Data>::PostOrderTraverse(fun); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   void PQHeap<Data>::Map(typename MappableContainer<Data>::MapFun fun)
   {
-    HeapVec<Data>::Map(fun); // Delegates to HeapVec
+    HeapVec<Data>::Map(fun); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   void PQHeap<Data>::PreOrderMap(typename MappableContainer<Data>::MapFun fun)
   {
-    HeapVec<Data>::PreOrderMap(fun); // Delegates to HeapVec
+    HeapVec<Data>::PreOrderMap(fun); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   void PQHeap<Data>::PostOrderMap(typename MappableContainer<Data>::MapFun fun)
   {
-    HeapVec<Data>::PostOrderMap(fun); // Delegates to HeapVec
+    HeapVec<Data>::PostOrderMap(fun); // Access HeapVec through inheritance
   }
 
   template <typename Data>
   bool PQHeap<Data>::Exists(const Data &data) const noexcept
   {
-    return HeapVec<Data>::Exists(data); // Delegates to HeapVec
+    return HeapVec<Data>::Exists(data); // Access HeapVec through inheritance
   }
 
   /* ************************************************************************** */
@@ -170,10 +170,10 @@ namespace lasd
   template <typename Data>
   void PQHeap<Data>::Clear()
   {
-    HeapVec<Data>::Clear(); // Delegates to HeapVec
+    HeapVec<Data>::Clear(); // Access HeapVec through inheritance
   }
 
-  /* ************************************************************************** */
+  /* ************************************************************************ */
 
   // Specific member functions (inherited from PQ)
 
@@ -196,7 +196,17 @@ namespace lasd
     {
       throw std::length_error("Priority queue is empty");
     }
-    HeapVec<Data>::RemoveRoot(); // Use HeapVec's RemoveRoot function
+
+    if (size == 1)
+    {
+      Vector<Data>::Resize(0);
+    }
+    else
+    {
+      elements[0] = std::move(elements[size - 1]);
+      Vector<Data>::Resize(size - 1);
+      HeapifyDown(0);
+    }
   }
 
   // TipNRemove function - returns and removes the maximum element
@@ -208,7 +218,7 @@ namespace lasd
       throw std::length_error("Priority queue is empty");
     }
     Data tip = HeapVec<Data>::operator[](0); // Save the root element
-    HeapVec<Data>::RemoveRoot();             // Remove the root
+    RemoveTip();                             // Remove the root
     return tip;
   }
 
@@ -216,14 +226,18 @@ namespace lasd
   template <typename Data>
   void PQHeap<Data>::Insert(const Data &value)
   {
-    HeapVec<Data>::Insert(value); // Use HeapVec's Insert function
+    Vector<Data>::Resize(size + 1);
+    elements[size - 1] = value;
+    HeapifyUp(size - 1);
   }
 
   // Insert function - move version
   template <typename Data>
   void PQHeap<Data>::Insert(Data &&value)
   {
-    HeapVec<Data>::Insert(std::move(value)); // Use HeapVec's Insert function with move
+    Vector<Data>::Resize(size + 1);
+    elements[size - 1] = std::move(value);
+    HeapifyUp(size - 1);
   }
 
   // Change function - copy version
@@ -237,8 +251,8 @@ namespace lasd
     HeapVec<Data>::operator[](index) = value; // Change the value
 
     // Restore heap property by trying both directions
-    HeapVec<Data>::HeapifyUp(index);   // Check if we need to bubble up
-    HeapVec<Data>::HeapifyDown(index); // Check if we need to bubble down
+    HeapifyUp(index);   // Check if we need to bubble up
+    HeapifyDown(index); // Check if we need to bubble down
   }
 
   // Change function - move version
@@ -252,8 +266,8 @@ namespace lasd
     HeapVec<Data>::operator[](index) = std::move(value); // Change the value with move
 
     // Restore heap property by trying both directions
-    HeapVec<Data>::HeapifyUp(index);   // Check if we need to bubble up
-    HeapVec<Data>::HeapifyDown(index); // Check if we need to bubble down
+    HeapifyUp(index);   // Check if we need to bubble up
+    HeapifyDown(index); // Check if we need to bubble down
   }
 
   /* ************************************************************************** */

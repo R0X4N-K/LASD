@@ -566,6 +566,48 @@ void PQInsertRemoveSequence(uint &testnum, uint &testerr, const Data &val1, cons
   testerr += (1 - (uint)tst);
 }
 
+template <typename Data>
+void PQCopyConstructor(uint &testnum, uint &testerr, const lasd::Vector<Data> &data)
+{
+  bool tst;
+  testnum++;
+  try
+  {
+    std::cout << " " << testnum << " (" << testerr << ") PQ copy constructor maintains priority order: ";
+    lasd::PQHeap<Data> originalPQ(data);
+    lasd::PQHeap<Data> copiedPQ(originalPQ);
+    std::cout << ((tst = (copiedPQ.Size() == originalPQ.Size() && !copiedPQ.Empty() && copiedPQ.Tip() == originalPQ.Tip())) ? "Correct" : "Error") << "!" << std::endl;
+  }
+  catch (std::exception &exc)
+  {
+    tst = false;
+    std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
+  }
+  testerr += (1 - (uint)tst);
+}
+
+template <typename Data>
+void PQMoveConstructor(uint &testnum, uint &testerr, const lasd::Vector<Data> &data)
+{
+  bool tst;
+  testnum++;
+  try
+  {
+    std::cout << " " << testnum << " (" << testerr << ") PQ move constructor maintains priority order: ";
+    lasd::PQHeap<Data> originalPQ(data);
+    Data expectedTip = originalPQ.Tip();
+    ulong expectedSize = originalPQ.Size();
+    lasd::PQHeap<Data> movedPQ(std::move(originalPQ));
+    std::cout << ((tst = (movedPQ.Size() == expectedSize && !movedPQ.Empty() && movedPQ.Tip() == expectedTip)) ? "Correct" : "Error") << "!" << std::endl;
+  }
+  catch (std::exception &exc)
+  {
+    tst = false;
+    std::cout << "\"" << exc.what() << "\": " << "Error!" << std::endl;
+  }
+  testerr += (1 - (uint)tst);
+}
+
 /* ************************************************************************** */
 
 // Complete test functions for different data types
@@ -654,6 +696,10 @@ void mytestPQInt(uint &testnum, uint &testerr)
 
     // Test Insert-Remove sequence
     PQInsertRemoveSequence<int>(loctestnum, loctesterr, 30, 10, 20);
+
+    // Test copy and move constructors
+    PQCopyConstructor<int>(loctestnum, loctesterr, stressData);
+    PQMoveConstructor<int>(loctestnum, loctesterr, stressData);
 
     // Test consistency checks
     lasd::PQHeap<int> consistencyPQ(stressData);
@@ -752,6 +798,10 @@ void mytestPQString(uint &testnum, uint &testerr)
 
     // Test Insert-Remove sequence
     PQInsertRemoveSequence<std::string>(loctestnum, loctesterr, std::string("charlie"), std::string("alpha"), std::string("bravo"));
+
+    // Test copy and move constructors
+    PQCopyConstructor<std::string>(loctestnum, loctesterr, strStressData);
+    PQMoveConstructor<std::string>(loctestnum, loctesterr, strStressData);
 
     // Test consistency
     lasd::PQHeap<std::string> strConsistencyPQ(strStressData);

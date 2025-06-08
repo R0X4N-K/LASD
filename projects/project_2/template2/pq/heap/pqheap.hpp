@@ -15,7 +15,7 @@ namespace lasd
 
   template <typename Data>
   class PQHeap : virtual public PQ<Data>,
-                 virtual public HeapVec<Data>
+                 private HeapVec<Data>
   {
     // Must extend PQ<Data>,
     // Could extend HeapVec<Data>
@@ -26,11 +26,43 @@ namespace lasd
   protected:
     using Container::size;
 
+    // Import specific functions from HeapVec
+    using HeapVec<Data>::HeapifyUp;
+    using HeapVec<Data>::HeapifyDown;
+    using HeapVec<Data>::elements;
+
     // ...
 
   public:
     // Default constructor
     PQHeap();
+
+    /* ************************************************************************ */
+
+    // Specific constructors
+    PQHeap(const TraversableContainer<Data> &); // A priority queue obtained from a TraversableContainer
+    PQHeap(MappableContainer<Data> &&);         // A priority queue obtained from a MappableContainer
+
+    /* ************************************************************************ */
+
+    // Copy constructor
+    PQHeap(const PQHeap &);
+
+    // Move constructor
+    PQHeap(PQHeap &&) noexcept;
+
+    /* ************************************************************************ */
+
+    // Destructor
+    ~PQHeap() = default;
+
+    /* ************************************************************************ */
+
+    // Copy assignment
+    PQHeap &operator=(const PQHeap &);
+
+    // Move assignment
+    PQHeap &operator=(PQHeap &&) noexcept;
 
     /* ************************************************************************ */
 
@@ -64,33 +96,6 @@ namespace lasd
     // Specific member functions (inherited from ClearableContainer)
 
     void Clear() override; // Override ClearableContainer member
-
-    /* ************************************************************************ */
-
-    // Specific constructors
-    PQHeap(const TraversableContainer<Data> &); // A priority queue obtained from a TraversableContainer
-    PQHeap(MappableContainer<Data> &&);         // A priority queue obtained from a MappableContainer
-
-    /* ************************************************************************ */
-
-    // Copy constructor
-    PQHeap(const PQHeap &);
-
-    // Move constructor
-    PQHeap(PQHeap &&) noexcept;
-
-    /* ************************************************************************ */
-
-    // Destructor
-    ~PQHeap() = default;
-
-    /* ************************************************************************ */
-
-    // Copy assignment
-    PQHeap &operator=(const PQHeap &);
-
-    // Move assignment
-    PQHeap &operator=(PQHeap &&) noexcept;
 
     /* ************************************************************************ */
 
